@@ -1,0 +1,11 @@
+{
+	"extends": "@mckayla/tsconfig",
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": false,
+		"noEmit": true,
+		"skipLibCheck": false
+	},
+	"include": ["next-env.d.ts", "./**/*"],
+	"exclude": ["node_modules"]
+}
