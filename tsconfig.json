@@ -4,7 +4,8 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": false,
 		"noEmit": true,
-		"skipLibCheck": false
+		"skipLibCheck": false,
+		"importsNotUsedAsValues": "preserve"
 	},
 	"include": ["next-env.d.ts", "./**/*"],
 	"exclude": ["node_modules"]
