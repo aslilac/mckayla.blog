@@ -1,11 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
-import {
-	is,
-	$object,
-	$string,
-	matches,
-	Type,
-} from "succulent";
+import { is, $object, $string, matches, Type } from "succulent";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const fs = await import("fs/promises");
