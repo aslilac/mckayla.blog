@@ -18,4 +18,5 @@ fields:
     display_utc: false
   default: now
 pages:
+- "./posts/oowijfoiwjef.md"
 - "./posts/posts/beppo.md"
