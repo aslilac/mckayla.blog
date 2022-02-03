@@ -4,8 +4,12 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": false,
 		"noEmit": true,
-		"skipLibCheck": false
+		"skipLibCheck": false,
+		"baseUrl": ".",
+		"paths": {
+			"^/*": ["./*"]
+		}
 	},
 	"include": ["next-env.d.ts", "./**/*"],
-	"exclude": ["./node_modules"]
+	"exclude": ["./node_modules/"]
 }

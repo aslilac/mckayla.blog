@@ -12,6 +12,7 @@
 	"devDependencies": {
 		"@mckayla/prettier": "^1.0.1",
 		"@mckayla/tsconfig": "^1.0.2",
+		"@notionhq/client": "^0.4.13",
 		"@types/node": "^16.0.0",
 		"@types/react": "^17.0.38",
 		"@types/react-dom": "^17.0.11",
