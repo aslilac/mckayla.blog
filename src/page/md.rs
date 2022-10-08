@@ -11,18 +11,38 @@ use super::Page;
 pub struct PageMetadata {
 	pub title: String,
 	pub author: String,
-	pub published: NaiveDate,
+	pub date: NaiveDate,
 	pub summary: Option<String>,
 	pub tags: Vec<String>,
+	pub cover: Option<String>,
+	pub status: PageStatus,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum PageStatus {
+	Draft,
+	Test,
+	Published,
 }
 
 impl From<HashMap<String, String>> for PageMetadata {
 	fn from(map: HashMap<String, String>) -> Self {
+		let status = match map
+			.get("status")
+			.unwrap_or(&"published".to_string())
+			.to_ascii_lowercase()
+			.as_str()
+		{
+			"draft" => PageStatus::Draft,
+			"test" => PageStatus::Test,
+			"published" => PageStatus::Published,
+			other => panic!("invalid page status {}", other),
+		};
+
 		PageMetadata {
 			title: map.get("title").unwrap().clone(),
 			author: map.get("author").unwrap().clone(),
-			published: NaiveDate::parse_from_str(map.get("published").unwrap(), "%Y.%m.%d")
-				.unwrap(),
+			date: NaiveDate::parse_from_str(map.get("date").unwrap(), "%Y.%m.%d").unwrap(),
 			summary: map.get("summary").cloned(),
 			tags: map
 				.get("tags")
@@ -32,6 +52,8 @@ impl From<HashMap<String, String>> for PageMetadata {
 						.collect::<Vec<_>>()
 				})
 				.unwrap_or_default(),
+			cover: map.get("cover").cloned(),
+			status,
 		}
 	}
 }
@@ -81,20 +103,12 @@ impl MarkdownPage {
 
 impl PartialOrd for MarkdownPage {
 	fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-		Some(
-			self.metadata
-				.published
-				.cmp(&other.metadata.published)
-				.reverse(),
-		)
+		Some(self.metadata.date.cmp(&other.metadata.date).reverse())
 	}
 }
 impl Ord for MarkdownPage {
 	fn cmp(&self, other: &Self) -> Ordering {
-		self.metadata
-			.published
-			.cmp(&other.metadata.published)
-			.reverse()
+		self.metadata.date.cmp(&other.metadata.date).reverse()
 	}
 }
 
@@ -126,12 +140,13 @@ impl Page for MarkdownPage {
 			<link rel=\"og:image:secure_url\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
 			<style>pre {{ font-size: 14px !important; }}</style>\
 			<style>hr {{ border: 1px solid #7773; }}</style>\
-			<style>img {{ margin: auto; max-width: 100%; }}</style>\
-			</head>\n\
+			<style>img {{ margin: auto; max-width: 100%; max-height: 70vh; }}</style>\
+			<style>blockquote {{ margin: 0; padding: 0.5em 2em; background-color: #f8f8f8; border-radius: 6px; }}</style>\
 			<body>\
 			<main>\
-			<header>\
 			<a href=\"..\">Home</a>\
+			<header>\
+			{cover}\
 			<h1>{title}</h1>\
 			</header>\
 			<hr />\
@@ -143,6 +158,7 @@ impl Page for MarkdownPage {
 			</html>\n\
 			",
 			title = self.metadata.title,
+			cover = self.metadata.cover.as_ref().map(|url| format!("<img src=\"{}\" />", url)).unwrap_or_default(),
 			content = markdown::to_html(&self.content),
 		)
 	}

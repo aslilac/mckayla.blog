@@ -4,6 +4,7 @@ use std::fs;
 use std::path::Path;
 
 pub use md::MarkdownPage;
+pub use md::PageStatus;
 
 pub trait Page {
 	fn render(&self) -> String;

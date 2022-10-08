@@ -20,7 +20,7 @@ jobs:
           toolchain: stable
           default: true
 
-      - run: cargo run
+      - run: cargo run -- -publish
 
       - uses: actions/upload-pages-artifact@v1.0.4
         name: Upload static assets

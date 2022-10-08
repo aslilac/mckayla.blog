@@ -1,9 +1,10 @@
 ---
 title: Hello, computer!
 author: Kayla Washburn
-published: 2022.10.7
+date: 2010.1.1
 summary: august is super cute n good boof boof boof
 tags: august, puppy, cute
+status: test
 ---
 
 # Header

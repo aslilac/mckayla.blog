@@ -1,9 +1,8 @@
 ---
 title: A Tale of Two Clang
 author: Kayla Washburn
-published: 2019.8.10
+date: 2019.8.10
 summary: Why C++ makes me sad
-draft: true
 ---
 
 # Prologue

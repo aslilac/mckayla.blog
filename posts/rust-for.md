@@ -1,8 +1,8 @@
 ---
 title: Rust for&mldr;
 author: Kayla Washburn
-published: 2022.12.1
-draft: true
+date: 2022.12.1
+status: draft
 ---
 
 <aside>This series of blog posts targets developers who are already proficient in at least one

@@ -1,8 +1,8 @@
 ---
 title: How to write "Hello, world!" in assembly—on every platform
 author: Kayla Washburn
-published: 2000.1.1
-draft: true
+date: 2000.1.1
+status: draft
 ---
 
 Obviously, this list of examples isn't actually inclusive of every possible combination

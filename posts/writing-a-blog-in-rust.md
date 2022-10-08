@@ -1,7 +1,7 @@
 ---
 title: Making a blog with Rust
 author: Kayla Washburn
-published: 2022.11.1
+date: 2022.11.1
 summary: I made this blog using Rust; but why?
 ---
 
@@ -12,6 +12,8 @@ out there that I could've used, and that would leverage my experience. A [bunch]
 really hard? Don't people only use it for performance sensitive things? It's also
 notorious for having slow build times, so wouldn't the performance benefits be
 negated by the bad build times if all I'm using it for is *build*ing a static site?
+
+![](https://cdn.mckayla.cloud/-/16a595829d914009bdc6f49d101c37a9/cover.avif)
 
 ## Performance
 

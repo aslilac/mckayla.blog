@@ -1,7 +1,8 @@
 ---
 title: Why are circular references in Rust so hard?
 author: Kayla Washburn
-published: 2000.1.1
+date: 2000.1.1
+status: draft
 ---
 
 If you just came here for the literal answer to the question, "how can I make a circular

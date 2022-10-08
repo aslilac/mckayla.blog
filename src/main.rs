@@ -1,13 +1,17 @@
+mod options;
 mod page;
 
 use once_cell::sync::Lazy;
 use std::cmp::Ordering;
+use std::env;
 use std::fs;
 use std::io;
 use std::path::PathBuf;
 
+use options::Options;
 use page::MarkdownPage;
 use page::Page;
+use page::PageStatus::Published;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct BlogPost {
@@ -37,12 +41,15 @@ impl From<PathBuf> for BlogPost {
 }
 
 fn main() -> io::Result<()> {
+	let options = env::args().skip(1).collect::<Options>();
+
 	let dir = fs::read_dir("./posts/")?;
 	let mut posts = dir
 		.flatten()
 		.filter(|entry| entry.file_type().unwrap().is_file())
 		.map(|entry| entry.path().into())
-		.collect::<Vec<BlogPost>>();
+		.filter(|post: &BlogPost| !options.publish || post.page.metadata.status == Published)
+		.collect::<Vec<_>>();
 	posts.sort();
 
 	let index = posts
