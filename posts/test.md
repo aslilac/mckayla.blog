@@ -1,9 +1,9 @@
 ---
 title: Hello, computer!
-author: Kayla Washburn
-date: 2010.1.1
-summary: august is super cute n good boof boof boof
-tags: august, puppy, cute
+author: Pocky
+date: 2023.1.1
+summary: An example blog post
+tags: pocky, markdown, syntax highlighting
 status: test
 ---
 

@@ -1,42 +1,40 @@
+mod blog;
 mod options;
 mod page;
 
-use once_cell::sync::Lazy;
 use std::cmp::Ordering;
 use std::env;
 use std::fs;
 use std::io;
 use std::path::PathBuf;
 
+use blog::BlogPost;
+use blog::BlogPostStatus::Published;
 use options::Options;
-use page::MarkdownPage;
 use page::Page;
-use page::PageStatus::Published;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-struct BlogPost {
+struct BlogPostFile {
 	pub path: PathBuf,
-	pub page: MarkdownPage,
+	pub page: BlogPost,
 }
 
-impl PartialOrd for BlogPost {
+impl PartialOrd for BlogPostFile {
 	fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
 		Some(self.page.cmp(&other.page))
 	}
 }
-impl Ord for BlogPost {
+impl Ord for BlogPostFile {
 	fn cmp(&self, other: &Self) -> Ordering {
 		self.page.cmp(&other.page)
 	}
 }
 
-static OUTPUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from("./output/"));
-
-impl From<PathBuf> for BlogPost {
+impl From<PathBuf> for BlogPostFile {
 	fn from(mut path: PathBuf) -> Self {
-		let page = MarkdownPage::from_file_path(&path);
+		let page = BlogPost::from_file_path(&path);
 		path.set_extension("html");
-		BlogPost { path, page }
+		BlogPostFile { path, page }
 	}
 }
 
@@ -48,7 +46,7 @@ fn main() -> io::Result<()> {
 		.flatten()
 		.filter(|entry| entry.file_type().unwrap().is_file())
 		.map(|entry| entry.path().into())
-		.filter(|post: &BlogPost| !options.publish || post.page.metadata.status == Published)
+		.filter(|post: &BlogPostFile| !options.publish || post.page.metadata.status == Published)
 		.collect::<Vec<_>>();
 	posts.sort();
 
@@ -114,14 +112,13 @@ fn main() -> io::Result<()> {
 	);
 
 	for post in posts {
-		// println!("{}: {:?}", post.path.to_str().unwrap(), post.page.metadata);
-		let output_path = OUTPUT_DIR.join(&post.path);
+		let output_path = options.output.join(&post.path);
 		fs::create_dir_all(output_path.parent().unwrap())
-			.expect("failed to create output/ directory");
-		post.page.render_to_file(output_path);
+			.expect("failed to create output directory");
+		post.page.render_to_file(output_path)?;
 	}
 
-	fs::write(OUTPUT_DIR.join("index.html"), index_page)?;
+	fs::write(options.output.join("index.html"), index_page)?;
 
 	Ok(())
 }

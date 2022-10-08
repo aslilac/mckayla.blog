@@ -156,7 +156,6 @@ version = "0.0.0"
 dependencies = [
  "chrono",
  "markdown",
- "once_cell",
 ]
 
 [[package]]

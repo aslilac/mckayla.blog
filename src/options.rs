@@ -1,8 +1,25 @@
+use std::path::PathBuf;
 use std::process::exit;
 
 #[derive(Clone, Debug, Default)]
+struct OptionsBuilder {
+	output: Option<PathBuf>,
+	publish: bool,
+}
+
+#[derive(Clone, Debug, Default)]
 pub struct Options {
+	pub output: PathBuf,
 	pub publish: bool,
+}
+
+impl From<OptionsBuilder> for Options {
+	fn from(builder: OptionsBuilder) -> Self {
+		Options {
+			output: builder.output.unwrap_or_else(|| PathBuf::from("./output/")),
+			publish: builder.publish,
+		}
+	}
 }
 
 impl<S> FromIterator<S> for Options
@@ -13,7 +30,7 @@ where
 	where
 		I: IntoIterator<Item = S>,
 	{
-		let mut options = Options::default();
+		let mut options = OptionsBuilder::default();
 		let mut args = args.into_iter();
 
 		while let Some(arg) = args.next() {
@@ -29,11 +46,10 @@ where
 					}
 				}
 			} else {
-				println!("unrecognized argument: {}", arg);
-				exit(1);
+				options.output = Some(PathBuf::from(arg));
 			}
 		}
 
-		options
+		options.into()
 	}
 }
