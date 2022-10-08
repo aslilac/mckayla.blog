@@ -1,0 +1,44 @@
+hr {
+	border: 1px solid #7773;
+}
+h1 {
+	margin: 0.5em 0 0;
+}
+article {
+	margin: 2em 0;
+}
+a {
+	/*color: #caab00;*/
+	/*color: #ca0075;*/
+	color: #f8c;
+}
+.index-header {
+	text-align: center;
+}
+pre {
+	font-size: 14px !important;
+}
+img {
+	margin: auto;
+	max-width: 100%;
+	max-height: 70vh;
+}
+blockquote {
+	margin: 0;
+	padding: 0.5em 2em;
+	background-color: #7a7a7a09;
+	border-radius: 6px;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #1b1b1b;
+		color: #fff;
+	}
+
+	a {
+		color: #4d5;
+	}
+}
+*/

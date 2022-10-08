@@ -3,6 +3,7 @@ title: Making a blog with Rust
 author: Kayla Washburn
 date: 2022.11.1
 summary: I used Rust to make this blog; but why?
+tags: programming, rust
 ---
 
 I'm a TypeScript developer by trade. I've been writing TypeScript professionally for

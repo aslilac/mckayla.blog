@@ -3,6 +3,7 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::path::Path;
 
+use crate::page::FromFilePath;
 use crate::page::MarkdownPage;
 use crate::page::Page;
 
@@ -63,8 +64,8 @@ pub struct BlogPost {
 	pub content: String,
 }
 
-impl BlogPost {
-	pub fn from_file_path<P: AsRef<Path>>(path: P) -> Self {
+impl FromFilePath for BlogPost {
+	fn from_file_path<P: AsRef<Path>>(path: P) -> Self {
 		let page = MarkdownPage::from_file_path(path);
 
 		BlogPost {
@@ -104,26 +105,32 @@ impl Page for BlogPost {
 			<title>{title}</title>\
 			<meta charset=\"utf-8\" />\
 			<link rel=\"icon\" href=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
+			<link rel=\"preload\" href=\"https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.woff2\" \
+				as=\"font\" type=\"font/woff2\" crossorigin=\"anonymous\" />\
 			<link rel=\"stylesheet\" href=\"https://cdn.mckayla.cloud/nothing.css\" />\
-			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.css\" />\
+			<link rel=\"stylesheet\" href=\"/blog.css\" />\
+			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" />\
+			<!--<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" media=\"(prefers-color-scheme: light)\" />-->\
+			<!--<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css\" media=\"(prefers-color-scheme: dark)\" />-->\
 			<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\
 			<link rel=\"og:title\" href=\"{title}\" />\
 			<link rel=\"og:type\" href=\"website\" />\
 			<link rel=\"og:image\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
 			<link rel=\"og:image:secure_url\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
-			<style>pre {{ font-size: 14px !important; }}</style>\
-			<style>hr {{ border: 1px solid #7773; }}</style>\
-			<style>img {{ margin: auto; max-width: 100%; max-height: 70vh; }}</style>\
-			<style>blockquote {{ margin: 0; padding: 0.5em 2em; background-color: #f8f8f8; border-radius: 6px; }}</style>\
 			<body>\
 			<main>\
-			<a href=\"/\">Home</a>\
+			<nav><a href=\"/\">Home</a></nav>\
 			<header>\
 			{cover}\
 			<h1>{title}</h1>\
 			</header>\
 			<hr />\
 			<article>{content}</article>\
+			<footer>\
+			<div>\
+			&hearts; <a href=\"https://mckayla.dev\">McKayla</a>\
+			</div>\
+			</footer>\
 			</main>\
 			<script src=\"https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js\"></script>\
 			<script src=\"https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js\"></script>\
@@ -132,7 +139,7 @@ impl Page for BlogPost {
 			",
 			title = self.metadata.title,
 			cover = self.metadata.cover.as_ref().map(|url| format!("<img src=\"{}\" />", url)).unwrap_or_default(),
-			content = markdown::to_html(&self.content),
+			content = self.content,
 		)
 	}
 }

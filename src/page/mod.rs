@@ -14,3 +14,7 @@ pub trait Page {
 		fs::write(path, self.render())
 	}
 }
+
+pub trait FromFilePath {
+	fn from_file_path<P: AsRef<Path>>(path: P) -> Self;
+}

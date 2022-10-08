@@ -11,6 +11,7 @@ use std::path::PathBuf;
 use blog::BlogPost;
 use blog::BlogPostStatus::Published;
 use options::Options;
+use page::FromFilePath;
 use page::Page;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -82,21 +83,23 @@ fn main() -> io::Result<()> {
 		<title>{title}</title>\
 		<meta charset=\"utf-8\" />\
 		<link rel=\"icon\" href=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
+		<link rel=\"preload\" href=\"https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.woff2\" \
+			as=\"font\" type=\"font/woff2\" crossorigin=\"anonymous\" />\
 		<link rel=\"stylesheet\" href=\"https://cdn.mckayla.cloud/nothing.css\" />\
+		<link rel=\"stylesheet\" href=\"/blog.css\" />\
 		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\
 		<link rel=\"og:title\" href=\"{title}\" />\
 		<link rel=\"og:type\" href=\"website\" />\
 		<link rel=\"og:image\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
 		<link rel=\"og:image:secure_url\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
-		<style>hr {{ border: 1px solid #7773; }}</style>\
-		<style>h1 {{ margin: 0.5em 0 0; }}</style>\
-		<style>article {{ margin: 2em 0; }}</style>\
 		</head>\n\
 		<body>\
 		<main>\
-		<header style=\"text-align: center;\">\
+		<header class=\"index-header\">\
 		<picture>\
-		<img width=200 height=200 src=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
+		<source type=\"image/avif\" width=200 height=200 srcset=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
+		<source type=\"image/webp\" width=200 height=200 srcset=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.webp\" />\
+		<img width=200 height=200 src=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.jpg\" />\
 		</picture>\
 		<h1>{title}</h1>\
 		<p>{subtitle}</p>\
@@ -119,6 +122,7 @@ fn main() -> io::Result<()> {
 	}
 
 	fs::write(options.output.join("index.html"), index_page)?;
+	fs::copy("./src/blog.css", options.output.join("blog.css"))?;
 
 	Ok(())
 }
