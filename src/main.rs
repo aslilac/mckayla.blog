@@ -76,10 +76,20 @@ fn main() -> io::Result<()> {
 		<head>\
 		<title>{title}</title>\
 		<meta charset=\"utf-8\" />\
+		<link rel=\"icon\" href=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
 		<link rel=\"stylesheet\" href=\"https://cdn.mckayla.cloud/nothing.css\" />\
+		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\
+		<link rel=\"og:title\" href=\"{title}\" />\
+		<link rel=\"og:type\" href=\"website\" />\
+		<link rel=\"og:image\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
+		<link rel=\"og:image:secure_url\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
+		<style>hr {{ border: 1px solid #7773; }}</style>\
+		<style>h1 {{ margin: 0.5em 0 0; }}</style>\
+		<style>article {{ margin: 2em 0; }}</style>\
 		</head>\n\
 		<body>\
-		<header>\
+		<main>\
+		<header style=\"text-align: center;\">\
 		<picture>\
 		<img width=200 height=200 src=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
 		</picture>\
@@ -88,6 +98,7 @@ fn main() -> io::Result<()> {
 		</header>\
 		<hr />\
 		{index}\
+		</main>\
 		</body>\n\
 		</html>\n\
 		",

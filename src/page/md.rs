@@ -65,7 +65,10 @@ impl MarkdownPage {
 					let (key, value) = line
 						.split_once(':')
 						.expect("frontmatter section should only contain key value pairs");
-					metadata.insert(key.trim().to_string(), value.trim().to_string());
+					metadata.insert(
+						key.trim().to_ascii_lowercase().to_string(),
+						value.trim().to_string(),
+					);
 				});
 		}
 
@@ -113,26 +116,33 @@ impl Page for MarkdownPage {
 			<head>\
 			<title>{title}</title>\
 			<meta charset=\"utf-8\" />\
+			<link rel=\"icon\" href=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
 			<link rel=\"stylesheet\" href=\"https://cdn.mckayla.cloud/nothing.css\" />\
 			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.css\" />\
-			<style>pre, code {{ font-size: 14px !important; }}</style>\
+			<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\
+			<link rel=\"og:title\" href=\"{title}\" />\
+			<link rel=\"og:type\" href=\"website\" />\
+			<link rel=\"og:image\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
+			<link rel=\"og:image:secure_url\" href=\"https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif\" />\
+			<style>pre {{ font-size: 14px !important; }}</style>\
+			<style>hr {{ border: 1px solid #7773; }}</style>\
+			<style>img {{ margin: auto; max-width: 100%; }}</style>\
 			</head>\n\
 			<body>\
+			<main>\
 			<header>\
+			<a href=\"..\">Home</a>\
 			<h1>{title}</h1>\
-			<p>by {author}</p>\
-			<p>Published on {published}</p>\
 			</header>\
 			<hr />\
 			<article>{content}</article>\
+			</main>\
 			<script src=\"https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js\"></script>\
 			<script src=\"https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js\"></script>\
 			</body>\n\
 			</html>\n\
 			",
 			title = self.metadata.title,
-			author = self.metadata.author,
-			published = self.metadata.published.format("%A, %B %-d, %Y"),
 			content = markdown::to_html(&self.content),
 		)
 	}
