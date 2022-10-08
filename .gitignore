@@ -1,0 +1,13 @@
+.DS_Store
+.env*
+.idea/
+.nova/
+.vscode/
+build/
+dist/
+node_modules/
+output/
+target/
+*.log
+*.pyc
+*.tsbuildinfo

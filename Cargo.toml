@@ -1,0 +1,16 @@
+[package]
+name = "pocky"
+version = "0.0.0"
+authors = ["McKayla Washburn <mckayla@hey.com>"]
+description = ""
+keywords = []
+license = "MIT"
+homepage = "https://github.com/xaslilac/pocky"
+repository = "https://github.com/xaslilac/pocky"
+documentation = "https://docs.rs/crate/pocky"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.22"
+markdown = "0.3.0"
+once_cell = "1.15.0"
