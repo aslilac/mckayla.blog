@@ -95,8 +95,6 @@ fn main() -> io::Result<()> {
 		subtitle = "Aspiring wannabe • she/her 🏳️‍⚧️"
 	);
 
-	fs::write(OUTPUT_DIR.join("index.html"), index_page)?;
-
 	for post in posts {
 		// println!("{}: {:?}", post.path.to_str().unwrap(), post.page.metadata);
 		let output_path = OUTPUT_DIR.join(&post.path);
@@ -104,6 +102,8 @@ fn main() -> io::Result<()> {
 			.expect("failed to create output/ directory");
 		post.page.render_to_file(output_path);
 	}
+
+	fs::write(OUTPUT_DIR.join("index.html"), index_page)?;
 
 	Ok(())
 }
