@@ -99,7 +99,7 @@ fn main() -> io::Result<()> {
 		<picture>\
 		<source type=\"image/avif\" width=200 height=200 srcset=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif\" />\
 		<source type=\"image/webp\" width=200 height=200 srcset=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.webp\" />\
-		<img width=200 height=200 src=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.jpg\" />\
+		<img width=200 height=200 src=\"https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.png\" />\
 		</picture>\
 		<h1>{title}</h1>\
 		<p>{subtitle}</p>\

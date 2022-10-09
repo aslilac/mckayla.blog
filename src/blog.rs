@@ -109,9 +109,9 @@ impl Page for BlogPost {
 				as=\"font\" type=\"font/woff2\" crossorigin=\"anonymous\" />\
 			<link rel=\"stylesheet\" href=\"https://cdn.mckayla.cloud/nothing.css\" />\
 			<link rel=\"stylesheet\" href=\"/blog.css\" />\
-			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" />\
-			<!--<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" media=\"(prefers-color-scheme: light)\" />-->\
-			<!--<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css\" media=\"(prefers-color-scheme: dark)\" />-->\
+			<!--<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" />-->\
+			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.min.css\" media=\"(prefers-color-scheme: light)\" />\
+			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css\" media=\"(prefers-color-scheme: dark)\" />\
 			<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\
 			<link rel=\"og:title\" href=\"{title}\" />\
 			<link rel=\"og:type\" href=\"website\" />\
