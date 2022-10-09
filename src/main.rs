@@ -58,13 +58,14 @@ fn main() -> io::Result<()> {
 				"\
 				<article>\
 				<a href=\"{}\"><h1>{}</h1></a>\
-				<sub>by {}</sub>\
+				<sub>by {} &mdash; {}</sub>\
 				{}\
 				</article>\
 				",
 				post.path.to_string_lossy(),
 				post.page.metadata.title,
 				post.page.metadata.author,
+				post.page.metadata.date.format("%A, %B %-d, %Y"),
 				post.page
 					.metadata
 					.summary
@@ -118,7 +119,7 @@ fn main() -> io::Result<()> {
 		let output_path = options.output.join(&post.path);
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
-		post.page.render_to_file(output_path)?;
+		fs::write(output_path, post.page.as_html())?;
 	}
 
 	fs::write(options.output.join("index.html"), index_page)?;

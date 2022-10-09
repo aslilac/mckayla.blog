@@ -1,7 +1,6 @@
 ---
 title: How to write "Hello, world!" in assembly—on every platform
 author: Kayla Washburn
-date: 2000.1.1
 status: draft
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Hello, computer!
 author: Pocky
-date: 2023.1.1
 summary: An example blog post
 tags: pocky, markdown, syntax highlighting
 status: test

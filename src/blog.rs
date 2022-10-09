@@ -1,4 +1,5 @@
 use chrono::NaiveDate;
+use chrono::Utc;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::path::Path;
@@ -27,22 +28,38 @@ pub enum BlogPostStatus {
 
 impl From<HashMap<String, String>> for BlogPostMetadata {
 	fn from(map: HashMap<String, String>) -> Self {
+		use BlogPostStatus::*;
+
 		let status = match map
 			.get("status")
 			.unwrap_or(&"published".to_string())
 			.to_ascii_lowercase()
 			.as_str()
 		{
-			"draft" => BlogPostStatus::Draft,
-			"test" => BlogPostStatus::Test,
-			"published" => BlogPostStatus::Published,
+			"draft" => Draft,
+			"test" => Test,
+			"published" => Published,
 			other => panic!("invalid page status {}", other),
 		};
+
+		let date = map
+			.get("date")
+			.map(|date| {
+				NaiveDate::parse_from_str(date, "%Y.%m.%d")
+					.unwrap_or_else(|_| panic!("invalid date: {}", date))
+			})
+			.unwrap_or_else(|| {
+				if status == Published {
+					panic!("published posts must have a date");
+				}
+
+				Utc::today().naive_utc()
+			});
 
 		BlogPostMetadata {
 			title: map.get("title").unwrap().clone(),
 			author: map.get("author").unwrap().clone(),
-			date: NaiveDate::parse_from_str(map.get("date").unwrap(), "%Y.%m.%d").unwrap(),
+			date,
 			summary: map.get("summary").cloned(),
 			tags: map
 				.get("tags")
@@ -96,7 +113,7 @@ impl Page for BlogPost {
 			<script src=\"https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js\"></script>\
 	*/
 
-	fn render(&self) -> String {
+	fn as_html(&self) -> String {
 		format!(
 			"\
 			<!doctype html>\n\

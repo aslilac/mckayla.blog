@@ -1,7 +1,6 @@
 ---
 title: Why are circular references in Rust so hard?
 author: Kayla Washburn
-date: 2000.1.1
 status: draft
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Why are C and C++ so complicated?
 author: Kayla Washburn
-date: 2000.1.1
 status: draft
 ---
 
