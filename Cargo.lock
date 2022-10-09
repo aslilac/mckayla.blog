@@ -114,6 +114,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "mckayla_blog"
+version = "0.0.0"
+dependencies = [
+ "chrono",
+ "markdown",
+ "pocky",
+]
+
+[[package]]
 name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -152,7 +161,9 @@ checksum = "d15b6607fa632996eb8a17c9041cb6071cb75ac057abd45dece578723ea8c7c0"
 
 [[package]]
 name = "pocky"
-version = "0.0.0"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b558a30e685ca9e67aef245d29f7ae861495e84ea79ab19a1b3bec6f2144bc1"
 dependencies = [
  "chrono",
  "markdown",

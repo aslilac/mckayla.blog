@@ -1,7 +1,8 @@
 mod blog;
 mod options;
-mod page;
 
+use pocky::FromFilePath;
+use pocky::Page;
 use std::cmp::Ordering;
 use std::env;
 use std::fs;
@@ -11,8 +12,6 @@ use std::path::PathBuf;
 use blog::BlogPost;
 use blog::BlogPostStatus::Published;
 use options::Options;
-use page::FromFilePath;
-use page::Page;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct BlogPostFile {
