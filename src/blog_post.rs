@@ -20,7 +20,8 @@ pub struct BlogPost {
 
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct BlogPostMetadata {
-	#[serde(default, deserialize_with = "pocky::de::markdown")]
+	// doesn't work well in `<title>`, wraps everything in a `<p>`...
+	// #[serde(default, deserialize_with = "pocky::de::markdown")]
 	pub title: String,
 	pub author: String,
 	#[serde(default, deserialize_with = "de_date", serialize_with = "ser_date")]

@@ -11,15 +11,14 @@ cover:
 ---
 
 I'm a TypeScript developer by trade. I've been writing TypeScript professionally for
-years, and there are [countless](https://nextjs.org) [options](https://nuxtjs.org)
-[for](https://kit.svelte.dev) [static](https://jekyllrb.com) [sites](https://gohugo.io)
-[and](https://www.gatsbyjs.com) [blogs](https://docusaurus.io) out there that I could've
-used, and that would leverage my experience. A [bunch](https://vercel.com)
-[of](https://www.netlify.com) [companies](https://render.com) will even automate your
-builds and host your blog for free! and isn't Rust, like, really hard? Don't people only
-use it for performance sensitive things? It's also notorious for having slow build times,
-so wouldn't the performance benefits be negated by the bad build times if all I'm using it
-for is *build*ing a static site? Was I determined to build my blog on hard mode?
+years, and there are [countless][next] [options][nuxt] [for][svelte] [static][jekyll]
+[sites][hugo] [and][gatsby] [blogs][docusaurus] out there that I could've used, and that
+would leverage my experience. A [bunch][vercel] [of][netlify] [companies][render] will
+even automate your builds and host your blog for free! and isn't Rust, like, really hard?
+Don't people only use it for performance sensitive things? It's also notorious for having
+slow build times, so wouldn't the performance benefits be negated by the bad build times
+if all I'm using it for is *build*ing a static site? Was I determined to build my blog on
+hard mode?
 
 ## Performance
 
@@ -36,4 +35,16 @@ then served from a CDN, which is essentially as fast as you're ever gonna get.
 
 Alright,
 
-Wanna try out framework behind this blog? It's called [Pocky](https://crates.io/crates/pocky)
+Wanna try out framework behind this blog? It's called [Pocky]
+
+[docusaurus]: https://docusaurus.io
+[gatsby]: https://www.gatsbyjs.com
+[hugo]: https://gohugo.io
+[jekyll]: https://jekyllrb.com
+[netlify]: https://www.netlify.com
+[next]: https://nextjs.org
+[nuxt]: https://nuxtjs.org
+[pocky]: https://crates.io/crates/pocky
+[render]: https://render.com
+[svelte]: https://kit.svelte.dev
+[vercel]: https://vercel.com
