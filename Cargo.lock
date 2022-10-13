@@ -274,7 +274,9 @@ dependencies = [
 
 [[package]]
 name = "pocky"
-version = "0.2.0"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7aca7b4a124a96455d0f71f951804625b0230589af160245bb28a9139cada40f"
 dependencies = [
  "pulldown-cmark",
  "serde",
