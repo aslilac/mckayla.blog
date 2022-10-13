@@ -1,54 +1,29 @@
 mod blog;
 mod options;
 
-use pocky::FromFilePath;
-use pocky::Page;
-use std::cmp::Ordering;
+use pocky::AsHtml;
+use pocky::PageCollection;
 use std::env;
 use std::fs;
 use std::io;
-use std::path::PathBuf;
 
 use blog::BlogPost;
 use blog::BlogPostStatus::Published;
 use options::Options;
 
-#[derive(Clone, Debug, Eq, PartialEq)]
-struct BlogPostFile {
-	pub path: PathBuf,
-	pub page: BlogPost,
-}
-
-impl PartialOrd for BlogPostFile {
-	fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-		Some(self.page.cmp(&other.page))
-	}
-}
-impl Ord for BlogPostFile {
-	fn cmp(&self, other: &Self) -> Ordering {
-		self.page.cmp(&other.page)
-	}
-}
-
-impl From<PathBuf> for BlogPostFile {
-	fn from(mut path: PathBuf) -> Self {
-		let page = BlogPost::from_file_path(&path);
-		path.set_extension("html");
-		BlogPostFile { path, page }
-	}
-}
-
 fn main() -> io::Result<()> {
 	let options = env::args().skip(1).collect::<Options>();
 
-	let dir = fs::read_dir("./posts/")?;
-	let mut posts = dir
-		.flatten()
-		.filter(|entry| entry.file_type().unwrap().is_file())
-		.map(|entry| entry.path().into())
-		.filter(|post: &BlogPostFile| !options.publish || post.page.metadata.status == Published)
-		.collect::<Vec<_>>();
-	posts.sort();
+	let mut posts = PageCollection::<BlogPost>::from("./posts/");
+	if options.publish {
+		posts.retain(|post| post.metadata.status == Published);
+
+		for post in posts.iter() {
+			if post.metadata.date.is_none() {
+				panic!("published posts must have a date");
+			}
+		}
+	}
 
 	let index = posts
 		.iter()
@@ -57,16 +32,19 @@ fn main() -> io::Result<()> {
 				"\
 				<article>\
 				<a href=\"{}\"><h1>{}</h1></a>\
-				<sub>by {} &mdash; {}</sub>\
+				<sub>by {}{}</sub>\
 				{}\
 				</article>\
 				",
 				post.path.to_string_lossy(),
-				post.page.metadata.title,
-				post.page.metadata.author,
-				post.page.metadata.date.format("%A, %B %-d, %Y"),
-				post.page
-					.metadata
+				post.metadata.title,
+				post.metadata.author,
+				post.metadata
+					.date
+					.as_ref()
+					.map(|date| date.format(" &mdash; %A, %B %-d, %Y").to_string())
+					.unwrap_or_default(),
+				post.metadata
 					.summary
 					.as_ref()
 					.map(|summary| format!("<p>{}</p>", summary))
@@ -118,7 +96,7 @@ fn main() -> io::Result<()> {
 		let output_path = options.output.join(&post.path);
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
-		fs::write(output_path, post.page.as_html())?;
+		fs::write(output_path, post.as_html())?;
 	}
 
 	fs::write(options.output.join("index.html"), index_page)?;

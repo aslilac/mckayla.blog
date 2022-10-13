@@ -1,91 +1,79 @@
 use chrono::NaiveDate;
-use chrono::Utc;
-use pocky::FromFilePath;
+use pocky::AsHtml;
 use pocky::MarkdownPage;
-use pocky::Page;
+use serde::Deserialize;
+use serde::Deserializer;
 use std::cmp::Ordering;
-use std::collections::HashMap;
 use std::path::Path;
+use std::path::PathBuf;
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 pub struct BlogPostMetadata {
 	pub title: String,
 	pub author: String,
-	pub date: NaiveDate,
+	#[serde(default, deserialize_with = "de_date")]
+	pub date: Option<NaiveDate>,
 	pub summary: Option<String>,
+	#[serde(default, deserialize_with = "de_tags")]
 	pub tags: Vec<String>,
 	pub cover: Option<String>,
+	#[serde(default)]
 	pub status: BlogPostStatus,
 }
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+fn de_tags<'de, D>(de: D) -> Result<Vec<String>, D::Error>
+where
+	D: Deserializer<'de>,
+{
+	let tags = String::deserialize(de)?
+		.split(',')
+		.map(|tag| tag.trim().to_string())
+		.collect();
+
+	Ok(tags)
+}
+
+fn de_date<'de, D>(de: D) -> Result<Option<NaiveDate>, D::Error>
+where
+	D: Deserializer<'de>,
+{
+	let date = Option::<String>::deserialize(de)?.map(|date_string| {
+		NaiveDate::parse_from_str(&date_string, "%Y.%m.%d")
+			.unwrap_or_else(|_| panic!("invalid date: {}", date_string))
+	});
+
+	Ok(date)
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Eq, PartialEq)]
+#[serde(rename_all = "lowercase")]
 pub enum BlogPostStatus {
 	Draft,
 	Test,
+	#[default]
 	Published,
-}
-
-impl From<HashMap<String, String>> for BlogPostMetadata {
-	fn from(map: HashMap<String, String>) -> Self {
-		use BlogPostStatus::*;
-
-		let status = match map
-			.get("status")
-			.unwrap_or(&"published".to_string())
-			.to_ascii_lowercase()
-			.as_str()
-		{
-			"draft" => Draft,
-			"test" => Test,
-			"published" => Published,
-			other => panic!("invalid page status {}", other),
-		};
-
-		let date = map
-			.get("date")
-			.map(|date| {
-				NaiveDate::parse_from_str(date, "%Y.%m.%d")
-					.unwrap_or_else(|_| panic!("invalid date: {}", date))
-			})
-			.unwrap_or_else(|| {
-				if status == Published {
-					panic!("published posts must have a date");
-				}
-
-				Utc::today().naive_utc()
-			});
-
-		BlogPostMetadata {
-			title: map.get("title").unwrap().clone(),
-			author: map.get("author").unwrap().clone(),
-			date,
-			summary: map.get("summary").cloned(),
-			tags: map
-				.get("tags")
-				.map(|tags| {
-					tags.split(',')
-						.map(|tag| tag.trim().to_string())
-						.collect::<Vec<_>>()
-				})
-				.unwrap_or_default(),
-			cover: map.get("cover").cloned(),
-			status,
-		}
-	}
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BlogPost {
+	pub path: PathBuf,
 	pub metadata: BlogPostMetadata,
 	pub content: String,
 }
 
-impl FromFilePath for BlogPost {
-	fn from_file_path<P: AsRef<Path>>(path: P) -> Self {
-		let page = MarkdownPage::from_file_path(path);
+impl<P> From<P> for BlogPost
+where
+	P: AsRef<Path>,
+{
+	fn from(path: P) -> Self {
+		let page = MarkdownPage::<BlogPostMetadata>::from(&path);
+
+		let mut path = path.as_ref().to_owned();
+		path.set_extension("html");
 
 		BlogPost {
-			metadata: page.metadata.into(),
+			path,
+			metadata: page.metadata.expect("missing blog post metadata"),
 			content: page.content,
 		}
 	}
@@ -102,7 +90,7 @@ impl Ord for BlogPost {
 	}
 }
 
-impl Page for BlogPost {
+impl AsHtml for BlogPost {
 	/*
 			<link rel=\"stylesheet\" href=\"https://unpkg.com/prismjs@1.29.0/themes/prism.css\" />\
 			<script src=\"https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js\"></script>\

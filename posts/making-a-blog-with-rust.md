@@ -34,4 +34,4 @@ then served from a CDN, which is essentially as fast as you're ever gonna get.
 
 Alright,
 
-Wanna try out framework behind this blog? It's called [Pocky](https://crates.io/crate/pocky)
+Wanna try out framework behind this blog? It's called [Pocky](https://crates.io/crates/pocky)
