@@ -4,6 +4,10 @@ author: Kayla Washburn
 date: 2022.11.1
 summary: I used Rust to make this blog; but why?
 tags: programming, rust
+cover:
+  avif: https://cdn.mckayla.cloud/-/16a595829d914009bdc6f49d101c37a9/cover.avif
+  webp: https://cdn.mckayla.cloud/-/16a595829d914009bdc6f49d101c37a9/cover.webp
+  default: https://cdn.mckayla.cloud/-/16a595829d914009bdc6f49d101c37a9/cover.jpeg
 ---
 
 I'm a TypeScript developer by trade. I've been writing TypeScript professionally for
@@ -16,8 +20,6 @@ builds and host your blog for free! and isn't Rust, like, really hard? Don't peo
 use it for performance sensitive things? It's also notorious for having slow build times,
 so wouldn't the performance benefits be negated by the bad build times if all I'm using it
 for is *build*ing a static site? Was I determined to build my blog on hard mode?
-
-![](https://cdn.mckayla.cloud/-/16a595829d914009bdc6f49d101c37a9/cover.avif)
 
 ## Performance
 

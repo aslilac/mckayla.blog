@@ -20,6 +20,14 @@ jobs:
           toolchain: stable
           default: true
 
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/
+            ./build/
+          key: build-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: build-cargo-
+
       - run: cargo run -- -publish
 
       - uses: actions/upload-pages-artifact@v1.0.4
