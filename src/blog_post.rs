@@ -31,6 +31,7 @@ pub struct BlogPostMetadata {
 	#[serde(default, deserialize_with = "pocky::de::comma_separated")]
 	pub tags: Vec<String>,
 	pub cover: Option<HashMap<String, String>>,
+	pub accent_color: Option<String>,
 	#[serde(default)]
 	pub status: BlogPostStatus,
 }

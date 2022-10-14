@@ -16,6 +16,13 @@
 <link rel="og:type" href="website" />
 <link rel="og:image" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
 <link rel="og:image:secure_url" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
+{{#if metadata.accent_color}}
+<style>
+a {
+	color: {{metadata.accent_color}};
+}
+</style>
+{{/if}}
 </head>
 <body>
 {{#with metadata.cover}}
@@ -36,9 +43,12 @@
 <hr />
 <article>{{{content}}}</article>
 <footer>
-<div>
-&hearts; <a href="https://mckayla.dev">McKayla</a>
-</div>
+<nav>
+&hearts;
+<a href="https://mckayla.dev">McKayla</a> &middot;
+<a href="https://twitter.com/partheseas">Twitter</a> &middot;
+<a href="https://github.com/aslilac">Github</a>
+</nav>
 </footer>
 </main>
 <script src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js"></script>

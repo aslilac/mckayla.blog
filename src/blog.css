@@ -56,9 +56,15 @@ figcaption {
 
 .cover {
 	width: 100%;
-	height: 70vh;
-	max-height: 500px;
+	height: 55vh;
+	height: 200px;
 	object-fit: cover;
+}
+
+@media (orientation: portrait) {
+	.cover {
+		height: 40vh;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
