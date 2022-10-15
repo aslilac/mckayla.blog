@@ -7,7 +7,7 @@ struct OptionsBuilder {
 	publish: bool,
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct Options {
 	pub output: PathBuf,
 	pub publish: bool,
