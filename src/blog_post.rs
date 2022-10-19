@@ -123,8 +123,6 @@ impl Ord for BlogPost {
 
 impl AsHtml for BlogPost {
 	fn as_html(&self) -> String {
-		dbg!(&self.metadata);
-
 		let renderer = Handlebars::new();
 		renderer
 			.render_template(include_str!("./templates/blog_post.html"), self)
