@@ -13,7 +13,7 @@
 		<author>
 		<name>{{author}}</name>
 		</author>
-		<updated>{{date}}</updated>
+		<updated>{{updated}}</updated>
 		{{#if summary}}<summary type="html">{{summary}}</summary>{{/if}}
 	{{/with}}
 		<id>{{canonical_url}}</id>

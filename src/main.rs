@@ -54,7 +54,7 @@ fn main() -> io::Result<()> {
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("index.html"), index_page)?;
 	// Render index
-	let updated = Utc::now().format("%Y-%m-%dT%h:%m:00.000Z").to_string();
+	let updated = Utc::now().format("%Y-%m-%dT%H:%M:00.000Z").to_string();
 	let rss_feed = renderer
 		.render_template(
 			include_str!("./templates/feed.xml"),

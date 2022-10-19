@@ -2,6 +2,7 @@ use chrono::NaiveDate;
 use handlebars::Handlebars;
 use pocky::AsHtml;
 use pocky::MarkdownPage;
+use serde::ser::SerializeStruct;
 use serde::Deserialize;
 use serde::Deserializer;
 use serde::Serialize;
@@ -22,13 +23,13 @@ pub struct BlogPost {
 	pub content: String,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 pub struct BlogPostMetadata {
 	// doesn't work well in `<title>`, wraps everything in a `<p>`...
 	// #[serde(default, deserialize_with = "pocky::de::markdown")]
 	pub title: String,
 	pub author: String,
-	#[serde(default, deserialize_with = "de_date", serialize_with = "ser_date")]
+	#[serde(default, deserialize_with = "de_date")]
 	pub date: Option<NaiveDate>,
 	#[serde(default, deserialize_with = "pocky::de::option_markdown")]
 	pub summary: Option<String>,
@@ -38,6 +39,29 @@ pub struct BlogPostMetadata {
 	pub accent_color: Option<String>,
 	#[serde(default)]
 	pub status: BlogPostStatus,
+}
+
+impl Serialize for BlogPostMetadata {
+	fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
+	where
+		S: Serializer,
+	{
+		let ser_date = |date: &Option<NaiveDate>, format: &str| {
+			date.map(|date| date.format(format).to_string())
+		};
+
+		let mut state = ser.serialize_struct("BlogPostMetadata", 8)?;
+		state.serialize_field("title", &self.title)?;
+		state.serialize_field("author", &self.author)?;
+		state.serialize_field("date", &ser_date(&self.date, "%A, %B %-d, %Y"))?;
+		state.serialize_field("updated", &ser_date(&self.date, "%Y-%m-%dT00:00:00.000Z"))?;
+		state.serialize_field("summary", &self.summary)?;
+		state.serialize_field("tags", &self.tags)?;
+		state.serialize_field("cover", &self.cover)?;
+		state.serialize_field("accent_color", &self.accent_color)?;
+		state.serialize_field("status", &self.status)?;
+		state.end()
+	}
 }
 
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, Eq, PartialEq)]
