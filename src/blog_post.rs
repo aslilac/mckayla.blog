@@ -10,9 +10,13 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::path::Path;
 use std::path::PathBuf;
+use url::Url;
+
+use crate::config::BLOG;
 
 #[derive(Clone, Debug, Serialize, Eq, PartialEq)]
 pub struct BlogPost {
+	pub canonical_url: Url,
 	pub path: PathBuf,
 	pub metadata: BlogPostMetadata,
 	pub content: String,
@@ -43,6 +47,7 @@ pub enum BlogPostStatus {
 	Test,
 	#[default]
 	Published,
+	Unlisted,
 }
 
 fn de_date<'de, D>(de: D) -> Result<Option<NaiveDate>, D::Error>
@@ -79,6 +84,10 @@ where
 		path.set_extension("html");
 
 		BlogPost {
+			canonical_url: BLOG
+				.canonical_origin
+				.join(path.to_str().expect("path contains invalid characters"))
+				.expect("failed to create canonical_url"),
 			path,
 			metadata: page.metadata.expect("missing blog post metadata"),
 			content: page.content,
@@ -101,7 +110,7 @@ impl AsHtml for BlogPost {
 	fn as_html(&self) -> String {
 		let renderer = Handlebars::new();
 		renderer
-			.render_template(include_str!("./blog_post.html"), self)
+			.render_template(include_str!("./templates/blog_post.html"), self)
 			.expect("failed to render handlebars")
 	}
 }

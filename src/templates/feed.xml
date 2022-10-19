@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Kayla</title>
+	<link rel="self" href="https://mckayla.blog/feed.xml" />
+	<link href="https://mckayla.blog" />
+	<id>https://mckayla.blog</id>
+	<updated>{{updated}}</updated>
+
+	{{#each posts}}
+	{{#with metadata}}
+	<entry>
+		<title type="html">{{title}}</title>
+		<author>
+		<name>{{author}}</name>
+		</author>
+		<updated>{{date}}</updated>
+		{{#if summary}}<summary type="html">{{summary}}</summary>{{/if}}
+	{{/with}}
+		<id>{{canonical_url}}</id>
+		<link href="{{canonical_url}}"/>
+		<!-- <content type="html">{content}</content> -->
+	</entry>
+	{{/each}}
+</feed>

@@ -35,9 +35,9 @@ where
 
 		while let Some(arg) = args.next() {
 			let arg = arg.as_ref();
-			if (arg.len() > 2 && arg.starts_with('-')) || arg.len() > 3 && arg.starts_with("--") {
+			if (arg.len() >= 2 && arg.starts_with('-')) || arg.len() >= 3 && arg.starts_with("--") {
 				match arg {
-					"-publish" | "--publish" => {
+					"-p" | "-publish" | "--publish" => {
 						options.publish = true;
 					}
 					_ => {
