@@ -39,6 +39,7 @@ pub struct BlogPostMetadata {
 	pub accent_color: Option<String>,
 	#[serde(default)]
 	pub status: BlogPostStatus,
+	pub hn: Option<u64>,
 }
 
 impl Serialize for BlogPostMetadata {
@@ -50,7 +51,7 @@ impl Serialize for BlogPostMetadata {
 			date.map(|date| date.format(format).to_string())
 		};
 
-		let mut state = ser.serialize_struct("BlogPostMetadata", 8)?;
+		let mut state = ser.serialize_struct("BlogPostMetadata", 10)?;
 		state.serialize_field("title", &self.title)?;
 		state.serialize_field("author", &self.author)?;
 		state.serialize_field("date", &ser_date(&self.date, "%A, %B %-d, %Y"))?;
@@ -60,6 +61,7 @@ impl Serialize for BlogPostMetadata {
 		state.serialize_field("cover", &self.cover)?;
 		state.serialize_field("accent_color", &self.accent_color)?;
 		state.serialize_field("status", &self.status)?;
+		state.serialize_field("hn", &self.hn)?;
 		state.end()
 	}
 }
@@ -84,17 +86,6 @@ where
 	});
 
 	Ok(date)
-}
-
-fn ser_date<S>(value: &Option<NaiveDate>, ser: S) -> Result<S::Ok, S::Error>
-where
-	S: Serializer,
-{
-	if let Some(date) = value {
-		ser.serialize_str(&date.format("%A, %B %-d, %Y").to_string())
-	} else {
-		ser.serialize_none()
-	}
 }
 
 impl<P> From<P> for BlogPost
@@ -132,6 +123,8 @@ impl Ord for BlogPost {
 
 impl AsHtml for BlogPost {
 	fn as_html(&self) -> String {
+		dbg!(&self.metadata);
+
 		let renderer = Handlebars::new();
 		renderer
 			.render_template(include_str!("./templates/blog_post.html"), self)

@@ -4,7 +4,7 @@
 	<link rel="self" href="https://mckayla.blog/feed.xml" />
 	<link href="https://mckayla.blog" />
 	<id>https://mckayla.blog</id>
-	<updated>{{updated}}</updated>
+	<updated>{{blog.updated}}</updated>
 
 	{{#each posts}}
 	{{#with metadata}}

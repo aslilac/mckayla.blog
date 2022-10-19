@@ -13,37 +13,46 @@
 body {
 	margin: 0;
 }
+
 hr {
 	border: 1px solid #7773;
 }
+
 h1 {
 	margin: 0.5em 0 0;
 }
+
 article {
 	margin: 2em 0 4em;
 }
+
 a {
 	/*color: #caab00;*/
 	/*color: #ca0075;*/
 	color: #f8c;
 }
+
 .index-header {
 	text-align: center;
 }
+
 pre {
 	font-size: 14px !important;
 }
+
 img {
 	margin: auto;
 	max-width: 100%;
 	max-height: 70vh;
 }
+
 blockquote {
 	margin: 0;
 	padding: 0.5em 2em;
 	background-color: #9991;
 	border-radius: 6px;
 }
+
 figure {
 	display: inline-block;
 }
@@ -52,6 +61,21 @@ figcaption {
 	font-style: italic;
 	font-weight: 600;
 	text-align: center;
+}
+
+.discussion {
+	margin: 5em 0 2em;
+}
+
+footer {
+	margin-top: 4em;
+	margin-bottom: 6em;
+}
+
+footer nav {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
 }
 
 .cover {

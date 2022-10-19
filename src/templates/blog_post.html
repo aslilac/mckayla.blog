@@ -42,16 +42,25 @@ a {
 </header>
 <hr />
 <article>{{{content}}}</article>
-<section>
-<h6>bleh</h6>
-If you wanna chat about anything you just read, feel free to send me at email!
+<section class="discussion">
+<h1>Discussion</h1>
+Thoughts? Comments? Questions? Reach out via <a href="https://twitter.com/mckayla">Twitter</a>
+or <a href="mailto:mckayla@hey.com">email</a>. I'd love to chat!<br />
+{{#if metadata.hn}}
+See the discussion on <a href="https://news.ycombinator.com/item?id={{metadata.hn}}">Hacker News</a>.
+{{else}}
+No one has posted this to Hacker News yet,
+<a href="https://news.ycombinator.com/submitlink?u={{canonical_url}}">but <em>you</em> can!</a>
+(If you do, let me know so I can update this post!)
+{{/if}}
 </section>
 <footer>
 <nav>
 &hearts;
 <a href="https://mckayla.dev">McKayla</a> &middot;
 <a href="https://twitter.com/partheseas">Twitter</a> &middot;
-<a href="https://github.com/aslilac">Github</a>
+<a href="https://github.com/aslilac">Github</a> &middot;
+<a href="/feed.xml">RSS</a>
 </nav>
 </footer>
 </main>

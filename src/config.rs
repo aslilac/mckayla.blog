@@ -1,3 +1,4 @@
+use chrono::Utc;
 use once_cell::sync::Lazy;
 use serde::Serialize;
 use url::Url;
@@ -11,6 +12,7 @@ pub struct BlogMetadata {
 	pub subtitle: &'static str,
 	pub og_title: &'static str,
 	pub og_image: &'static str,
+	pub updated: String,
 }
 
 pub static BLOG: Lazy<BlogMetadata> = Lazy::new(|| BlogMetadata {
@@ -21,4 +23,5 @@ pub static BLOG: Lazy<BlogMetadata> = Lazy::new(|| BlogMetadata {
 	subtitle: "Aspiring wannabe • she/her 🏳️‍⚧️",
 	og_title: "mckayla.blog",
 	og_image: "https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif",
+	updated: Utc::now().format("%Y-%m-%dT%H:%M:00.000Z").to_string(),
 });

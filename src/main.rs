@@ -2,7 +2,6 @@ mod blog_post;
 mod config;
 mod options;
 
-use chrono::Utc;
 use handlebars::Handlebars;
 use pocky::AsHtml;
 use pocky::PageCollection;
@@ -53,12 +52,11 @@ fn main() -> io::Result<()> {
 		)
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("index.html"), index_page)?;
-	// Render index
-	let updated = Utc::now().format("%Y-%m-%dT%H:%M:00.000Z").to_string();
+	// Render feed.xml
 	let rss_feed = renderer
 		.render_template(
 			include_str!("./templates/feed.xml"),
-			&json!({ "blog": &*BLOG, "posts": &posts, "updated": updated }),
+			&json!({ "blog": &*BLOG, "posts": &posts }),
 		)
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("feed.xml"), rss_feed)?;
