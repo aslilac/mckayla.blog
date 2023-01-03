@@ -20,7 +20,7 @@ pub static BLOG: Lazy<BlogMetadata> = Lazy::new(|| BlogMetadata {
 	favicon: "https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif",
 	thumbnail: "https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif",
 	title: "Kayla",
-	subtitle: "Aspiring wannabe • she/her 🏳️‍⚧️",
+	subtitle: "Aspiring wannabe, human shaped, slightly minty • she/her 🏳️‍⚧️",
 	og_title: "mckayla.blog",
 	og_image: "https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif",
 	updated: Utc::now().format("%Y-%m-%dT%H:%M:00.000Z").to_string(),
