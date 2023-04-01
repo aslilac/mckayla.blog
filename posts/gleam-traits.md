@@ -27,14 +27,14 @@ people can just pick up and start being productive with.
 
 The language is simple to the point where it's a bit of a point of contention; although
 "language complexity" almost always is. Gleam doesn't even have `if` conditions, and
-instead incourages you to use pattern matching. There are some things that might come
-along eventually, like optional arguments and a hygenic macro system, but there are other
+instead encourages you to use pattern matching. There are some things that might come
+along eventually, like optional arguments and a hygienic macro system, but there are other
 things that have been explicitly omitted from the language, like traits.
 
-For quite a while, I felt like traits were a glaring ommission from the language, and I
+For quite a while, I felt like traits were a glaring omission from the language, and I
 brought it up in the [Gleam Discord] several times. It would end pretty much the same way
 every time. "They don't allow you to express anything new, and they'd add a lot of
-complexity to the langauge." I always found this a bit frustrating, because I find [trait
+complexity to the language." I always found this a bit frustrating, because I find [trait
 systems][rust traits] like [Rust]'s to be incredibly intuitive. They enable your code to be quite generic
 _and_ composable, in a way that I personally think feels quite nice. Every time I thought
 I had a compelling enough use case for traits, it was never enough to sway the others. It
@@ -57,7 +57,7 @@ struct Friend {
 
 impl Display for Friend {
   fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    writeln!(formatter, "Hi, my name is {}!", self.name)
+    write!(formatter, "Hi, my name is {}!", self.name)
   }
 }
 ```
@@ -82,7 +82,7 @@ pub type Friend {
 }
 
 pub fn to_string(self: Friend) -> String {
-  "Hi, my name is " <> self.name <> "!\n"
+  "Hi, my name is " <> self.name <> "!"
 }
 ```
 
@@ -90,7 +90,7 @@ pub fn to_string(self: Friend) -> String {
 
 ```gleam
 let louis = friend.Friend("Louis")
-io.write(louis |> friend.to_string())
+io.writeln(louis |> friend.to_string())
 ```
 
 It might not be immediately obvious (I know it wasn't for me), but I think this example
@@ -146,7 +146,7 @@ really not all that different. Take for example the [`Iterator` trait][rust iter
 ways; and honestly it has more to do with the fact that data is immutable in Gleam than
 the fact that it's a type instead of a trait.
 
-We'll start again with Rust, and we'll do our comparsion by defining an iterator which
+We'll start again with Rust, and we'll do our comparison by defining an iterator which
 produces the Fibonacci sequence.
 
 ```rust
@@ -247,7 +247,7 @@ fn print_things_from_an_iterator(
   {
     it
     |> to_string()
-    |> io.print()
+    |> io.println()
   }
 }
 ```
