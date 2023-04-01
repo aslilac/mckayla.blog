@@ -163,7 +163,6 @@ impl Iterator for Fib {
 
 	fn next(&mut self) -> Option<Self::Item> {
 		(self.0, self.1) = (self.1, self.0 + self.1);
-		self.1 += self.0;
 		Some(self.0)
 	}
 }
