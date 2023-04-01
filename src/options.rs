@@ -37,7 +37,7 @@ where
 			let arg = arg.as_ref();
 			if (arg.len() >= 2 && arg.starts_with('-')) || arg.len() >= 3 && arg.starts_with("--") {
 				match arg {
-					"-p" | "-publish" | "--publish" => {
+					"-p" | "-pub" | "--pub" | "-publish" | "--publish" => {
 						options.publish = true;
 					}
 					_ => {

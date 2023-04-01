@@ -10,6 +10,15 @@
 		U+FEFF, U+FFFD;
 }
 
+@font-face {
+	font-family: "Cascadia Code";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 600;
+	src: url("https://cdn.mckayla.cloud/fonts/CascadiaCode-Variable.woff2")
+		format("truetype");
+}
+
 body {
 	margin: 0;
 }
@@ -61,6 +70,12 @@ figcaption {
 	font-style: italic;
 	font-weight: 600;
 	text-align: center;
+}
+
+code,
+pre {
+	font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
+		"DejaVu Sans Mono", monospace !important;
 }
 
 .discussion {

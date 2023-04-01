@@ -41,7 +41,7 @@ fn main() -> io::Result<()> {
 
 	// Hide unlisted posts from the index and RSS feeds
 	posts.retain(|post| post.metadata.status != Unlisted);
-	let posts = posts.into_vec();
+	let posts = posts.into_set();
 
 	let renderer = Handlebars::new();
 	// Render index
