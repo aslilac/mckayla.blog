@@ -90,7 +90,7 @@ pub fn to_string(self: Friend) -> String {
 
 ```gleam
 let louis = friend.Friend("Louis")
-io.writeln(louis |> friend.to_string())
+io.println(louis |> friend.to_string())
 ```
 
 It might not be immediately obvious (I know it wasn't for me), but I think this example
