@@ -153,25 +153,27 @@ produces the Fibonacci sequence.
 struct Fib(u64, u64);
 
 impl Default for Fib {
-	fn default() -> Self {
-		Self(0, 1)
-	}
+  fn default() -> Self {
+    Self(0, 1)
+  }
 }
 
 impl Iterator for Fib {
-	type Item = u64;
+  type Item = u64;
 
-	fn next(&mut self) -> Option<Self::Item> {
-		(self.0, self.1) = (self.1, self.0 + self.1);
-		Some(self.0)
-	}
+  fn next(&mut self) -> Option<Self::Item> {
+    (self.0, self.1) = (self.1, self.0 + self.1);
+    Some(self.0)
+  }
 }
 ```
 
 You could use this like so...
 
 ```rust
-let fib = Fib::default().take(10).collect::<Vec<_>>();
+let fib = Fib::default()
+  .take(10)
+  .collect::<Vec<_>>();
 println!("fib: {:?}", fib);
 ```
 
