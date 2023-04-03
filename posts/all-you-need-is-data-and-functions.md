@@ -1,8 +1,8 @@
 ---
-title: All you need is data and functions.
+title: All you need is data and functions
 author: Kayla Washburn
 date: 2023.4.1
-summary: How to thrive in a world without traits.
+summary: Thriving in a world without traits or interfaces
 tags: programming, rust, gleam, traits
 accent_color: "#ffaffe"
 cover:
@@ -20,9 +20,9 @@ languages.
 
 Over the last year, I've been fairly involved with a young programming language named
 [Gleam]. It's designed around a functional programming style, and the core language is
-simple enough to wrap your head around in only a day or two. I know people like to say
-that a lot; I've heard it a lot about languages like [Go] and [Zig] that _definitely_
-didn't click for me right away, but Gleam really seems to be the kind of language that
+simple enough to wrap your head around in only a day or two. People like to say
+that a lot, and I've heard it a lot about languages like [Go] and [Zig] (that _definitely_
+didn't click for me right away), but Gleam really seems to be the kind of language that
 people can just pick up and start being productive with.
 
 The language is simple to the point where it's a bit of a point of contention; although
@@ -31,12 +31,16 @@ instead encourages you to use pattern matching. There are some things that might
 along eventually, like optional arguments and a hygienic macro system, but there are other
 things that have been explicitly omitted from the language, like traits.
 
+I find [trait systems][rust traits] like [Rust]'s to be incredibly intuitive. They enable
+your code to be quite generic _and_ composable, in a way that I personally think feels
+quite nice. Interfaces in languages like [Go][go interfaces] or [C#][c# interfaces] fill
+very similar needs. The exact details vary slightly, but the idea is simple: **give
+developers a way to talk about shared behavior across different types.**
+
 For quite a while, I felt like traits were a glaring omission from the language, and I
 brought it up in the [Gleam Discord] several times. It would end pretty much the same way
 every time. "They don't allow you to express anything new, and they'd add a lot of
-complexity to the language." I always found this a bit frustrating, because I find [trait
-systems][rust traits] like [Rust]'s to be incredibly intuitive. They enable your code to be quite generic
-_and_ composable, in a way that I personally think feels quite nice. Every time I thought
+complexity to the language." I always found this a bit frustrating. Every time I thought
 I had a compelling enough use case for traits, it was never enough to sway the others. It
 was pretty defeating, because I never really understood what the alternative was. How can
 I express myself generically in a language like Gleam, with a nominal typing system and no
@@ -73,7 +77,7 @@ println!("{}", louis);
 ```
 
 ...to write the text "Hi, my name is Louis!" to stdout! The Rust compiler knows that any
-instance of `Friend` can be written to stdout using the implementation of the `Display`
+instance of `Friend` can work with `println!` by using the implementation of the `Display`
 trait that we provided it, so how might you express the same thing in Gleam?
 
 ```gleam
@@ -94,7 +98,7 @@ io.println(louis |> friend.to_string())
 ```
 
 It might not be immediately obvious (I know it wasn't for me), but I think this example
-can help you begin to pull away the veil: traits are just types. Our `Display` trait in
+can help you begin to pull away the veil: **traits are just types**. Our `Display` trait in
 this example, can be represented by the `String` type, and a function which converts from
 our original type to a `String`.
 
@@ -129,10 +133,21 @@ pub type Display {
 pub fn format(self: Display, options: DisplayOptions) -> String {
   self.formatter(options)
 }
+```
 
+...and a function to convert from our `Friend` type to this new `Display` type.
+
+```gleam
 pub fn to_display(self: Friend) -> String {
-  Display(fn(options: DisplayOptions) { to_string(self, options) })
+  Display(fn(options: DisplayOptions) { ... })
 }
+```
+
+Now to put it to use, you'd just do something like...
+
+```gleam
+let louis = friend.Friend("Louis") |> friend.to_display()
+io.println(louis |> display.format(DisplayOptions(...)))
 ```
 
 It requires a few more moving pieces, but it also looks quite a bit more like the traits
@@ -214,7 +229,11 @@ Note how similar that usage is to the Rust version! We still get to provide nice
 interfaces for using our type to anyone who is able to convert from their own type to our
 `Iterator` type (like `take`), and we didn't need a trait system to accomplish it.
 
-## Composition
+The biggest difference between most trait/interface systems and trait-types is that
+the language is essentially doing implicit conversions for you, from your data-type to
+the trait-type.
+
+## What about composition?
 
 Hopefully by now you're convinced that individually, types have as much to offer as
 traits. But one of the most important aspects of traits is their ability to be composed.
@@ -237,47 +256,69 @@ where
 ```
 
 You might expect this kind of generic program to be harder in Gleam without traits, but
-honestly it isn't.
+honestly it isn't. Just define a function that expects your trait-type!
 
 ```gleam
 fn print_things_from_an_iterator(
-  iter: iterator.Iterator(a),
-  to_string: fn (a) -> String,
+  iter: iterator.Iterator(Display),
 ) {
   use it <- iterator.each(iter)
   {
     it
-    |> to_string()
+    |> display.format(DisplayOptions(...))
     |> io.println()
   }
 }
 ```
 
-The solution is pretty much just to pass a function that converts to your "trait" type as
-an argument. It might not sound ideal, but it's also really easy to abstract this away so
-that you don't have to deal with it. Do you want to specify more than one "trait"
-constraint? Pass multiple conversion functions, or make a new type that composes all of
-them together, to make it easier to work with them in unison. There are plenty of creative
-ways to solve the same problems.
+Which we can use by doing something like...
+
+```gleam
+["Louis", "Hayleigh", "Kayla"]
+|> iterator.from_list()
+|> iterator.map(Friend)
+|> iterator.map(friend.to_display)
+|> print_things_from_an_iterator()
+```
+
+Compare this to Rust's...
+
+```rust
+let names = ["Louis", "Hayleigh", "Kayla"];
+let friends = names.iter()
+  .map(|name| Friend { name });
+print_things_from_an_iterator(friends);
+```
+
+Really the only difference is that we manually convert from `Friend` to `Display` in
+Gleam, where Rust already knows how to use `Friend` as a `Display`.
 
 ## tl;dr
 
-I still think traits in Rust are a very powerful way to express yourself, but Rust is also
-not concerned with being a simple language. It's concerned with being _powerful_.
-For a language like Gleam, that _is_ very concerned with being simple, they don't make as
-much sense. After all, all you really need is data and functions. :^)
+Instead of a trait, just make a type that implements the generic behavior you want, and
+then write a function to convert your data-type into your trait-type. If you need some
+data-type specific logic, then pass around functions as necessary (usually from your
+conversion function).
+
+Traits make sense in Rust, because the alternative I've proposed wouldn't work well with
+Rust's memory model or focus on performance, and using functions in this first-class manor
+would be much more complicated. For a language like Gleam, that doesn't have those concerns,
+but that _is_ very concerned with being simple and keeping concept count low, they don't
+make as much sense. After all, all you really need is data and functions. :^)
 
 ---
 
 If you've never heard of Gleam, you should check it out! It's a neat little language
 with a lovely community around it. Come hang out with all of us in [Discord][gleam discord]!
 
+[c# interfaces]: https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces
 [gleam]: https://gleam.run
 [gleam discord]: https://discord.gg/Fm8Pwmy
 [gleam iterator]: https://hexdocs.pm/gleam_stdlib/gleam/iterator.html
 [go]: https://go.dev
 [haskell]: https://www.haskell.org/
 [haskell show]: https://hackage.haskell.org/package/base-4.18.0.0/docs/Prelude.html#t:Show
+[go interfaces]: https://gobyexample.com/interfaces
 [javascript tostring]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString
 [rust]: https://rust-lang.org
 [rust display]: https://doc.rust-lang.org/std/fmt/trait.Display.html
