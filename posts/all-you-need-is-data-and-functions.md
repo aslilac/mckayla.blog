@@ -138,7 +138,7 @@ pub fn format(self: Display, options: DisplayOptions) -> String {
 ...and a function to convert from our `Friend` type to this new `Display` type.
 
 ```gleam
-pub fn to_display(self: Friend) -> String {
+pub fn to_display(self: Friend) -> Display {
   Display(fn(options: DisplayOptions) { ... })
 }
 ```
@@ -256,7 +256,7 @@ where
 ```
 
 You might expect this kind of generic program to be harder in Gleam without traits, but
-honestly it isn't. Just define a function that expects your trait-type!
+honestly it isn't. Just define a function that expects your trait-types!
 
 ```gleam
 fn print_things_from_an_iterator(
