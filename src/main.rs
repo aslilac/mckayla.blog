@@ -1,6 +1,8 @@
 mod blog_post;
 mod config;
 mod options;
+mod redirect_page;
+mod redirects;
 
 use handlebars::Handlebars;
 use pocky::AsHtml;
@@ -14,10 +16,25 @@ use blog_post::BlogPost;
 use blog_post::BlogPostStatus::{Published, Unlisted};
 use config::BLOG;
 use options::Options;
+use redirects::REDIRECTS;
 
 fn main() -> io::Result<()> {
 	let options = env::args().skip(1).collect::<Options>();
 
+	// Render redirects
+	for redirect in REDIRECTS.iter() {
+		let output_path = options.output.join(
+			&redirect
+				.from
+				.strip_prefix("/")
+				.expect("`from` for redirect should be an absolute url"),
+		);
+		fs::create_dir_all(output_path.parent().unwrap())
+			.expect("failed to create output directory");
+		fs::write(output_path, redirect.as_html())?;
+	}
+
+	// Collect posts into a `PageCollection`
 	let mut posts = PageCollection::<BlogPost>::from("./posts/");
 	if options.publish {
 		// Skip unpublished posts if we're building a version for publishing
@@ -61,7 +78,7 @@ fn main() -> io::Result<()> {
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("feed.xml"), rss_feed)?;
 
-	// Copy assets
+	// Copy assets from src/static/ to the output directory
 	for file in fs::read_dir("./src/static")?
 		.flatten()
 		.map(|entry| entry.path())

@@ -45,8 +45,21 @@ a {
 	text-align: center;
 }
 
+aside {
+	background-color: #8881;
+	padding: 16px;
+	border-left: 3px solid #8884;
+	padding-left: 20px;
+}
+
 pre {
 	font-size: 14px !important;
+}
+
+code,
+pre {
+	font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
+		"DejaVu Sans Mono", monospace !important;
 }
 
 img {
@@ -70,12 +83,6 @@ figcaption {
 	font-style: italic;
 	font-weight: 600;
 	text-align: center;
-}
-
-code,
-pre {
-	font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
-		"DejaVu Sans Mono", monospace !important;
 }
 
 .discussion {
