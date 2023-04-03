@@ -24,7 +24,7 @@ fn main() -> io::Result<()> {
 	// Render redirects
 	for redirect in REDIRECTS.iter() {
 		let output_path = options.output.join(
-			&redirect
+			redirect
 				.from
 				.strip_prefix("/")
 				.expect("`from` for redirect should be an absolute url"),
@@ -90,7 +90,7 @@ fn main() -> io::Result<()> {
 				.expect("failed to resolve file location"),
 			options
 				.output
-				.join(&file.file_name().expect("failed to get file name")),
+				.join(file.file_name().expect("failed to get file name")),
 		)?;
 	}
 

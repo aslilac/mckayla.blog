@@ -1,9 +1,11 @@
 use handlebars::Handlebars;
 use pocky::AsHtml;
 use serde::Serialize;
+use std::hash::Hash;
+use std::hash::Hasher;
 use std::path::PathBuf;
 
-#[derive(Debug, Eq, Hash, Serialize)]
+#[derive(Debug, Eq, Serialize)]
 pub struct RedirectPage {
 	pub from: PathBuf,
 	pub to: &'static str,
@@ -12,6 +14,15 @@ pub struct RedirectPage {
 impl PartialEq for RedirectPage {
 	fn eq(&self, other: &Self) -> bool {
 		self.from == other.from
+	}
+}
+
+impl Hash for RedirectPage {
+	fn hash<H>(&self, state: &mut H)
+	where
+		H: Hasher,
+	{
+		self.from.hash(state);
 	}
 }
 
