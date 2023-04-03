@@ -6,7 +6,7 @@ summary: Thriving in a world without traits or interfaces
 tags: programming, rust, gleam, traits
 accent_color: "#ffaffe"
 cover:
-  avid: https://cdn.mckayla.cloud/-/2577cf423ed0449181007c0ade133be3/Gleam-Dark.avif
+  avif: https://cdn.mckayla.cloud/-/2577cf423ed0449181007c0ade133be3/Gleam-Dark.avif
   default: https://cdn.mckayla.cloud/-/2577cf423ed0449181007c0ade133be3/Gleam-Dark.webp
 ---
 
