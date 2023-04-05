@@ -1,13 +1,15 @@
 ---
 title: All you need is data and functions
 author: Kayla Washburn
-date: 2023.4.1
+date: 2023.4.2
 summary: Thriving in a world without traits or interfaces
 tags: programming, rust, gleam, traits
 accent_color: "#ffaffe"
 cover:
   avif: https://cdn.mckayla.cloud/-/2577cf423ed0449181007c0ade133be3/Gleam-Dark.avif
   default: https://cdn.mckayla.cloud/-/2577cf423ed0449181007c0ade133be3/Gleam-Dark.webp
+hn: https://news.ycombinator.com/item?id=35436600
+lobsters: https://lobste.rs/s/kvgb5f/all_you_need_is_data_functions
 ---
 
 It's really easy to tend towards complexity as engineers. I think on some level, we love

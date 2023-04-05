@@ -39,7 +39,8 @@ pub struct BlogPostMetadata {
 	pub accent_color: Option<String>,
 	#[serde(default)]
 	pub status: BlogPostStatus,
-	pub hn: Option<u64>,
+	pub hn: Option<String>,
+	pub lobsters: Option<String>,
 }
 
 impl Serialize for BlogPostMetadata {
@@ -62,6 +63,7 @@ impl Serialize for BlogPostMetadata {
 		state.serialize_field("accent_color", &self.accent_color)?;
 		state.serialize_field("status", &self.status)?;
 		state.serialize_field("hn", &self.hn)?;
+		state.serialize_field("lobsters", &self.lobsters)?;
 		state.end()
 	}
 }

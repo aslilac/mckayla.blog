@@ -44,13 +44,17 @@ a {
 <article>{{{content}}}</article>
 <section class="discussion">
 <h1>Discussion</h1>
-Thoughts? Comments? Questions? Reach out via <a href="mailto:mckayla@hey.com">email</a>. I'd love to chat!<br />
+Thoughts? Comments? Questions?
+{{#if metadata.lobsters}}
+See the <a href="{{metadata.lobsters}}">discussion on Lobste.rs</a>!
+{{else}}
+Reach out via <a href="mailto:mckayla@hey.com">email</a>. I'd love to chat!
+{{/if}}
 </section>
 <footer>
 <nav>
 &hearts;
 <a href="https://mckayla.dev">McKayla</a> &middot;
-<a href="https://twitter.com/partheseas">Twitter</a> &middot;
 <a href="https://github.com/aslilac">Github</a> &middot;
 <a href="/feed.xml">RSS</a>
 </nav>
