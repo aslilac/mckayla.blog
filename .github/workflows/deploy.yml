@@ -30,7 +30,7 @@ jobs:
 
       - run: cargo run -- -publish
 
-      - uses: actions/upload-pages-artifact@v1.0.4
+      - uses: actions/upload-pages-artifact@v1
         name: Upload static assets
         with:
           path: ./output/
