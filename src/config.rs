@@ -1,7 +1,14 @@
 use chrono::Utc;
 use once_cell::sync::Lazy;
 use serde::Serialize;
+use serde_json::json;
+use std::collections::BTreeSet;
+use std::collections::HashSet;
 use url::Url;
+
+use crate::external::External;
+use crate::redirect_config;
+use crate::redirect_page::RedirectPage;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct BlogMetadata {
@@ -25,3 +32,27 @@ pub static BLOG: Lazy<BlogMetadata> = Lazy::new(|| BlogMetadata {
 	og_image: "https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif",
 	updated: Utc::now().format("%Y-%m-%dT%H:%M:00.000Z").to_string(),
 });
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+// * Configure external posts here!!                                                     *
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
+	serde_json::from_value(json!([
+			// {
+			// 	"canonical_url": "https://xaslilac.github.io/TeenageWeb/",
+			// 	"path": "https://xaslilac.github.io/TeenageWeb/",
+			// 	"title": "The Teenage Web",
+			// 	"author": "Kayla Washburn",
+			// 	"date": "2023.5.2",
+			// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
+			// }
+		]))
+	.expect("invalid external link set")
+});
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+// * Configure redirects here!!                                                          *
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+pub static REDIRECTS: Lazy<HashSet<RedirectPage>> = redirect_config!(
+  "/posts/gleam-traits.html" => "/posts/all-you-need-is-data-and-functions.html",
+);

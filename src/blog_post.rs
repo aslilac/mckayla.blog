@@ -19,6 +19,7 @@ use crate::config::BLOG;
 pub struct BlogPost {
 	pub canonical_url: Url,
 	pub path: PathBuf,
+	#[serde(flatten)]
 	pub metadata: BlogPostMetadata,
 	pub content: String,
 }

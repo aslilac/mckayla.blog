@@ -1,13 +1,15 @@
 mod blog_post;
 mod config;
+mod external;
+mod index_entry;
 mod options;
 mod redirect_page;
-mod redirects;
 
 use handlebars::Handlebars;
 use pocky::AsHtml;
 use pocky::PageCollection;
 use serde_json::json;
+use std::collections::BTreeSet;
 use std::env;
 use std::fs;
 use std::io;
@@ -15,8 +17,10 @@ use std::io;
 use blog_post::BlogPost;
 use blog_post::BlogPostStatus::{Published, Unlisted};
 use config::BLOG;
+use config::EXTERNAL_LINKS;
+use config::REDIRECTS;
+use index_entry::IndexEntry;
 use options::Options;
-use redirects::REDIRECTS;
 
 fn main() -> io::Result<()> {
 	let options = env::args().skip(1).collect::<Options>();
@@ -60,12 +64,19 @@ fn main() -> io::Result<()> {
 	posts.retain(|post| post.metadata.status != Unlisted);
 	let posts = posts.into_set();
 
+	// Create the index entries set from posts and external links
+	let post_entries = posts.iter().cloned().map(Into::into);
+	let external_link_entries = EXTERNAL_LINKS.iter().cloned().map(Into::into);
+	let index_entries = post_entries
+		.chain(external_link_entries)
+		.collect::<BTreeSet<IndexEntry>>();
+
 	let renderer = Handlebars::new();
 	// Render index
 	let index_page = renderer
 		.render_template(
 			include_str!("./templates/index.html"),
-			&json!({ "blog": &*BLOG, "posts": &posts }),
+			&json!({ "blog": &*BLOG, "posts": &index_entries }),
 		)
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("index.html"), index_page)?;

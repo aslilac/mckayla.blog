@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-US">
 <head>
-<title>{{metadata.title}}</title>
+<title>{{title}}</title>
 <meta charset="utf-8" />
 <link rel="icon" href="https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif" />
 <link rel="preload" href="https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.woff2"
@@ -12,20 +12,20 @@
 <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism.min.css" media="(prefers-color-scheme: light)" />
 <link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css" media="(prefers-color-scheme: dark)" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="og:title" href="{{metadata.title}}" />
+<link rel="og:title" href="{{title}}" />
 <link rel="og:type" href="website" />
 <link rel="og:image" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
 <link rel="og:image:secure_url" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
-{{#if metadata.accent_color}}
+{{#if accent_color}}
 <style>
 a {
-	color: {{metadata.accent_color}};
+	color: {{accent_color}};
 }
 </style>
 {{/if}}
 </head>
 <body>
-{{#with metadata.cover}}
+{{#with cover}}
 <div>
 <picture>
 {{#if avif}}<source type="image/avif" srcset="{{avif}}" />{{/if}}
@@ -38,15 +38,15 @@ a {
 <main>
 <nav><a href="/">mckayla.blog</a> / posts /</nav>
 <header>
-<h1>{{{metadata.title}}}</h1>
+<h1>{{{title}}}</h1>
 </header>
 <hr />
 <article>{{{content}}}</article>
 <section class="discussion">
 <h1>Discussion</h1>
 Thoughts? Comments? Questions?
-{{#if metadata.lobsters}}
-See the <a href="{{metadata.lobsters}}">discussion on Lobste.rs</a>!
+{{#if lobsters}}
+See the <a href="{{lobsters}}">discussion on Lobste.rs</a>!
 {{else}}
 Reach out via <a href="mailto:mckayla@hey.com">email</a>. I'd love to chat!
 {{/if}}
