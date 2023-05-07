@@ -13,22 +13,22 @@ pub enum IndexEntry {
 }
 
 impl IndexEntry {
-	fn sort_criteria(&self) -> &NaiveDate {
+	fn sort_criteria(&self) -> Option<&NaiveDate> {
 		match self {
-			IndexEntry::BlogPost(blog_post) => blog_post.metadata.date.as_ref().unwrap(),
-			IndexEntry::External(external) => &external.metadata.date,
+			IndexEntry::BlogPost(blog_post) => blog_post.metadata.date.as_ref(),
+			IndexEntry::External(external) => Some(&external.metadata.date),
 		}
 	}
 }
 
 impl PartialOrd for IndexEntry {
 	fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-		Some(self.sort_criteria().cmp(other.sort_criteria()).reverse())
+		Some(self.sort_criteria().cmp(&other.sort_criteria()).reverse())
 	}
 }
 impl Ord for IndexEntry {
 	fn cmp(&self, other: &Self) -> Ordering {
-		self.sort_criteria().cmp(other.sort_criteria()).reverse()
+		self.sort_criteria().cmp(&other.sort_criteria()).reverse()
 	}
 }
 
