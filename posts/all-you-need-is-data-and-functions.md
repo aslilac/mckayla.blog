@@ -295,7 +295,7 @@ print_things_from_an_iterator(friends);
 Really the only difference is that we manually convert from `Friend` to `Display` in
 Gleam, where Rust already knows how to use `Friend` as a `Display`.
 
-## tl;dr
+### tl;dr
 
 Instead of a trait, just make a type that implements the generic behavior you want, and
 then write a function to convert your data-type into your trait-type. If you need some

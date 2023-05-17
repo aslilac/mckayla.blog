@@ -1,4 +1,43 @@
 @font-face {
+	font-family: "Outfit";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.woff2")
+			format("woff2"),
+		url("https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.ttf")
+			format("truetype");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+		U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+		U+FEFF, U+FFFD;
+}
+
+html {
+	font-family: "Outfit", sans-serif;
+	font-size: 18px;
+	line-height: 1.75;
+}
+
+main {
+	margin: auto;
+	padding: 3em 1em;
+	max-width: 70ch;
+}
+
+main.index {
+	max-width: 50ch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 3em 0 1em;
+}
+
+@font-face {
 	font-family: "Cormorant";
 	font-style: normal;
 	font-display: swap;
@@ -32,7 +71,11 @@ h1 {
 }
 
 article {
-	margin: 2em 0 4em;
+	margin: 2em 0 3em;
+}
+
+.post-summary p {
+	margin: 0;
 }
 
 a {
@@ -103,8 +146,9 @@ footer nav {
 .cover {
 	width: 100%;
 	height: 55vh;
-	height: 200px;
+	height: 275px;
 	object-fit: cover;
+	object-position: center;
 }
 
 @media (orientation: portrait) {
