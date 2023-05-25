@@ -7,7 +7,6 @@
 	<updated>{{blog.updated}}</updated>
 
 	{{#each posts}}
-	{{#with metadata}}
 	<entry>
 		<title type="html">{{title}}</title>
 		<author>
@@ -15,7 +14,6 @@
 		</author>
 		<updated>{{updated}}</updated>
 		{{#if summary}}<summary type="html">{{summary}}</summary>{{/if}}
-	{{/with}}
 		<id>{{canonical_url}}</id>
 		<link href="{{canonical_url}}"/>
 		<!-- <content type="html">{content}</content> -->
