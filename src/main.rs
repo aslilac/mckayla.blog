@@ -1,10 +1,3 @@
-mod blog_post;
-mod config;
-mod external;
-mod index_entry;
-mod options;
-mod redirect_page;
-
 use handlebars::Handlebars;
 use pocky::AsHtml;
 use pocky::PageCollection;
@@ -13,6 +6,13 @@ use std::collections::BTreeSet;
 use std::env;
 use std::fs;
 use std::io;
+
+mod blog_post;
+mod config;
+mod external;
+mod index_entry;
+mod options;
+mod redirect_page;
 
 use blog_post::BlogPost;
 use blog_post::BlogPostStatus::{Published, Unlisted};
