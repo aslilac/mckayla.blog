@@ -39,7 +39,7 @@ fn main() -> io::Result<()> {
 	}
 
 	// Collect posts into a `PageCollection`
-	let mut posts = PageCollection::<BlogPost>::from("./posts/");
+	let mut posts = PageCollection::<BlogPost>::from("./content/posts/");
 	if options.publish {
 		// Skip unpublished posts if we're building a version for publishing
 		posts.retain(|post| post.metadata.status == Published || post.metadata.status == Unlisted);
