@@ -15,11 +15,6 @@ html {
 	line-height: 1.75;
 }
 
-main {
-	margin: auto;
-	padding: 3em 1em;
-}
-
 main section {
 	display: flex;
 	flex-direction: column;
@@ -128,11 +123,16 @@ figcaption {
 }
 
 .cover {
-	width: 100%;
-	height: 55vh;
-	height: 275px;
 	object-fit: cover;
 	object-position: center;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	z-index: -1;
+	left: 0;
+	top: 0;
+	max-height: unset; /* annoying */
+	filter: brightness(0.9);
 }
 
 @media (orientation: portrait) {

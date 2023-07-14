@@ -23,20 +23,20 @@ a {
 </style>
 {{/if}}</head>
 <body>
-{{#with cover}}
+<main>
 <div>
+{{#with cover}}
 <picture>
 {{#if avif}}<source type="image/avif" srcset="{{avif}}" />{{/if}}
 {{#if webp}}<source type="image/webp" srcset="{{webp}}" />{{/if}}
 {{#if jpeg}}<source type="image/jpeg" srcset="{{jpeg}}" />{{/if}}
 <img class="cover" src="{{default}}" />
 </picture>
-</div>
 {{/with}}
-<main>
 <section data-slide id="slide-0">
 <h1>{{{title}}}</h1>
 </section>
+</div>
 {{#each content}}
 	<section data-slide id="slide-{{add @index 1}}">{{{this}}}</section>
 {{/each}}

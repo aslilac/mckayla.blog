@@ -1,7 +1,6 @@
 document.body.addEventListener(
 	"keydown",
 	(event) => {
-		console.log("hi", event.key);
 		switch (event.key) {
 			case "k":
 			case "ArrowUp":
@@ -12,6 +11,7 @@ document.body.addEventListener(
 			case "j":
 			case "ArrowDown":
 			case "ArrowRight":
+			case " ":
 				event.preventDefault();
 				goToNext();
 				break;
@@ -50,12 +50,10 @@ function goToPrevious() {
 	const currentSlide = getCurrentSlideIndex();
 	location.hash = "";
 	location.hash = statePrefix + Math.max(0, currentSlide - 1);
-	console.log(location.hash);
 }
 
 function goToNext() {
 	const currentSlide = getCurrentSlideIndex();
 	location.hash = "";
 	location.hash = statePrefix + Math.min(currentSlide + 1, getLastSlideIndex());
-	console.log(location.hash);
 }

@@ -3,6 +3,9 @@ title: Thoughts about package management
 author: Kayla Washburn
 date: 2023.7.15
 accent_color: "#f9b14d"
+cover:
+  avif: https://cdn.mckayla.cloud/-/954d2u18v140dv/zig-cover.avif
+  default: https://cdn.mckayla.cloud/-/954d2u18v140dv/zig-cover.webp
 ---
 
 <!-- Given that work on the official package manager has begun, I thought it'd be fun to talk about package management, package authoring, and things to consider for the future. -->
@@ -64,7 +67,8 @@ We have a lot of opportunities to learn!
 - What if we need incompatible versions?
   <!--
   - I really want to use the new version, but this other dependency hasn't been used in a while and needs an older version.
-  - Including multiple versions has drawbacks. Interop, size, complexity. -->
+  - Including multiple versions has drawbacks. Interop, size, complexity.
+  -->
 
 +++
 
@@ -108,11 +112,9 @@ We have a lot of opportunities to learn!
 - build.rs
 - ...build.zig? 💀
 
-<!--
-Tons of package managers provide authors ways to run whatever code they want during installation.
-In any other context, we'd consider remote arbitrary code execution to be a disasterous outcome.
-Languages like Elm, Gren, Roc won't even let libraries run arbitrary code at _runtime_, let alone let some malicious package ruin your life from a single typo.
--->
+<!-- Tons of package managers provide authors ways to run whatever code they want during installation. -->
+
+<!-- In any other context, we'd consider remote arbitrary code execution to be a disasterous outcome. Languages like Elm, Gren, Roc won't even let libraries run arbitrary code at _runtime_, let alone let some malicious package ruin your life from a single typo. -->
 
 +++
 
@@ -145,7 +147,8 @@ Languages like Elm, Gren, Roc won't even let libraries run arbitrary code at _ru
   - Come up with alternative ways to describe behaviors, rather than letting anyone do anything
     <!--
     - npm "solves" this by letting you have platform specific dependencies
-    - `--ignore-scripts` -->
+    - `--ignore-scripts`
+    -->
   - At least _ask_ the user if it's okay to just run stuff
     <!-- Ask for every package, and every version, which wants to execute something. Cache it forever, so that it can't somehow change silently and run again. Speaking of caching... -->
 
@@ -165,7 +168,8 @@ Languages like Elm, Gren, Roc won't even let libraries run arbitrary code at _ru
 - Just be aware of what you're aiming for
   <!--
   - Only upload files that match `src/**/*.zig` by default
-  - ...with some mechanism for people to include other sorts of files as necessary -->
+  - ...with some mechanism for people to include other sorts of files as necessary
+  -->
 
 [eszip]: https://github.com/denoland/eszip
 [.crate]: https://users.rust-lang.org/t/where-to-learn-about-crate-file-format/11496
@@ -238,7 +242,7 @@ var client = requestz.Client.init(
 - Much, much simpler package manager
   <!-- All it has to do is download and install the exact packages you told it to. No building a complicated tree and trying to figure out how to best prune it and deduplicate things. No conflict resolution, just doing exactly what it's told to do. -->
 - No need for weird things like "peer dependencies"
-  <!-- This happens a lot with React. You have some UI library you're using, and you need to make sure it's using the same version of React as the rest of your application. If you have two dependencies, and you need to be absolutely sure they're using the same version of some third dependency as you are, just pass it to them! If you need to pass it around a lot, factor it out into a new function or module. We should be building strong systems that we're confident in. Why would we just cross our fingers and hope it doesn't go wrong? We should be making strong guarantees about these sorts of things. -->
+  <!-- This issue pops up a lot with React. You have some UI library you're using, and you need to make sure it's using the same version of React as the rest of your application. If you have two dependencies, and you need to be absolutely sure they're using the same version of some third dependency as you are, just pass it to them! If you need to pass it around a lot, factor it out into a new function or module. We should be building strong systems that we're confident in. Why would we just cross our fingers and hope it doesn't go wrong? We should be making strong guarantees about these sorts of things. -->
 - All of your dependencies become explicit
   <!-- You get to see the actual complexity. Nothing hiding behind the scenes. Nothing new can show up without your knowledge. Babel didn't depend on leftpad for many years, and plenty of people who were effected had *no idea* they depended on it. -->
 - You own the glue code!
@@ -249,7 +253,8 @@ var client = requestz.Client.init(
   - Postgres in production, use SQLite in tests (or at least a test oriented postgres provider)
   - You can fight over if this is a good idea or not, but I think it's good for individuals to be able to make these sorts of decisions for themselves, based off of their own circumstances, preferences, and tolerance for complexity.
   - Mock your HTTP requests with local files instead
-    - If I'm writing tests for an API client, I don't care about if we're actually hitting a real server during the tests, I care about my API client responding appropriately to certain responses and conditions, and those might actually be easier to control if they _don't_ go over the network. -->
+    - If I'm writing tests for an API client, I don't care about if we're actually hitting a real server during the tests, I care about my API client responding appropriately to certain responses and conditions, and those might actually be easier to control if they _don't_ go over the network.
+  -->
 - `comptime` means we can have this flexibility without runtime cost
 
 +++
@@ -301,6 +306,8 @@ var client = requestz.Client.init(
 <!-- As we enter an era of packages for Zig... -->
 
 If you're writing a package, keep the language you are working with in mind. **A language that focuses so heavily on low-level control deserves a package ecosystem that gives you the same kind of respect.**
+
+<!-- Your packages really need to fit with the paradigms of the languages. -->
 
 <!-- Zig is a unique language, which deserves a unique package ecosystem. -->
 
