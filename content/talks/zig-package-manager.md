@@ -2,14 +2,10 @@
 title: Thoughts about package management
 author: Kayla Washburn
 date: 2023.7.15
-accent_color: "#df5426"
+accent_color: "#f9b14d"
 ---
 
-# Thoughts about package management
-
 <!-- Given that work on the official package manager has begun, I thought it'd be fun to talk about package management, package authoring, and things to consider for the future. -->
-
-+++
 
 ## Prior art
 

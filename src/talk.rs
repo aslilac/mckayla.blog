@@ -1,4 +1,5 @@
 use chrono::NaiveDate;
+use handlebars::handlebars_helper;
 use handlebars::Handlebars;
 use serde::Deserialize;
 use serde::Serialize;
@@ -61,9 +62,12 @@ where
 	}
 }
 
+handlebars_helper!(add: |a: i64, b: i64| a + b);
+
 impl AsHtml for Talk {
 	fn as_html(&self) -> String {
-		let renderer = Handlebars::new();
+		let mut renderer = Handlebars::new();
+		renderer.register_helper("add", Box::new(add));
 		renderer
 			.render_template(include_str!("./templates/talk.html"), self)
 			.expect("failed to render handlebars")
