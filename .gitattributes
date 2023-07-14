@@ -1,1 +1,1 @@
-content/*.md linguist-detectable
+content/**.md linguist-detectable
