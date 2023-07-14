@@ -1,7 +1,5 @@
 use chrono::NaiveDate;
 use handlebars::Handlebars;
-use pocky::AsHtml;
-use pocky::MarkdownPage;
 use serde::ser::SerializeStruct;
 use serde::Deserialize;
 use serde::Serialize;
@@ -13,7 +11,9 @@ use std::path::PathBuf;
 use url::Url;
 
 use crate::config::BLOG;
-use crate::de;
+use crate::pocky::de;
+use crate::pocky::AsHtml;
+use crate::pocky::MarkdownPage;
 
 #[derive(Clone, Debug, Serialize, Eq, PartialEq)]
 pub struct BlogPost {
@@ -27,14 +27,14 @@ pub struct BlogPost {
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 pub struct BlogPostMetadata {
 	// doesn't work well in `<title>`, wraps everything in a `<p>`...
-	// #[serde(default, deserialize_with = "pocky::de::markdown")]
+	// #[serde(default, deserialize_with = "de::markdown")]
 	pub title: String,
 	pub author: String,
 	#[serde(default, deserialize_with = "de::date_option")]
 	pub date: Option<NaiveDate>,
-	#[serde(default, deserialize_with = "pocky::de::option_markdown")]
+	#[serde(default, deserialize_with = "de::markdown_option")]
 	pub summary: Option<String>,
-	#[serde(default, deserialize_with = "pocky::de::comma_separated")]
+	#[serde(default, deserialize_with = "de::comma_separated")]
 	pub tags: Vec<String>,
 	pub cover: Option<HashMap<String, String>>,
 	pub accent_color: Option<String>,

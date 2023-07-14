@@ -1,6 +1,4 @@
 use handlebars::Handlebars;
-use pocky::AsHtml;
-use pocky::PageCollection;
 use serde_json::json;
 use std::collections::BTreeSet;
 use std::env;
@@ -13,6 +11,7 @@ mod de;
 mod external;
 mod index_entry;
 mod options;
+mod pocky;
 mod redirect_page;
 mod ser;
 mod talk;
@@ -24,6 +23,8 @@ use config::EXTERNAL_LINKS;
 use config::REDIRECTS;
 use index_entry::IndexEntry;
 use options::Options;
+use pocky::AsHtml;
+use pocky::PageCollection;
 use talk::Talk;
 
 fn main() -> io::Result<()> {
@@ -58,7 +59,9 @@ fn main() -> io::Result<()> {
 
 	// Render posts
 	for post in posts.iter() {
-		let output_path = options.output.join(&post.path);
+		let output_path = options
+			.output
+			.join(&post.path.strip_prefix("content/").unwrap());
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
 		fs::write(output_path, post.as_html())?;
@@ -72,8 +75,10 @@ fn main() -> io::Result<()> {
 	let talks = PageCollection::<Talk>::from("content/talks/");
 
 	// Render talks
-	for talk in talks.iter() {
-		let output_path = options.output.join(&talk.path);
+	for talk in talks {
+		let output_path = options
+			.output
+			.join(&talk.path.strip_prefix("content/").unwrap());
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
 		fs::write(output_path, talk.as_html())?;
@@ -106,7 +111,9 @@ fn main() -> io::Result<()> {
 		.expect("failed to render handlebars");
 	fs::write(options.output.join("feed.xml"), rss_feed)?;
 
-	// Copy assets from src/static/ to the output directory
+	// Copy assets from content/resources/ to the output/resources/ directory
+	let output_path = options.output.join("resources/");
+	fs::create_dir_all(&output_path).expect("failed to create output directory");
 	for file in fs::read_dir("content/resources/")?
 		.flatten()
 		.map(|entry| entry.path())
@@ -116,9 +123,7 @@ fn main() -> io::Result<()> {
 			&file
 				.canonicalize()
 				.expect("failed to resolve file location"),
-			options
-				.output
-				.join(file.file_name().expect("failed to get file name")),
+			output_path.join(file.file_name().expect("failed to get file name")),
 		)?;
 	}
 

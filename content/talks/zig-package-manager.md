@@ -277,7 +277,7 @@ var client = requestz.Client.init(
 - What if adding a new dependency was a breaking change?
 - What if adding a new maintainer was a breaking change?
 - What if upgrading was more interactive?
-  - Maybe `zig upgrade` gives you an decision tree...
+  - Maybe `zig upgrade` gives you a decision tree...
     - "This major version is a breaking change because..."
       <!-- This is totally possible. Elm has had this for years! -->
     - "Hayleigh has been added as a maintainer"

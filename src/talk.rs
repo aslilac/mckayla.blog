@@ -1,16 +1,16 @@
 use chrono::NaiveDate;
 use handlebars::Handlebars;
-use pocky::md;
-use pocky::AsHtml;
-use pocky::TextPage;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::path::Path;
 use std::path::PathBuf;
 
-use crate::de;
-use crate::ser;
+use crate::pocky::de;
+use crate::pocky::md;
+use crate::pocky::ser;
+use crate::pocky::AsHtml;
+use crate::pocky::TextPage;
 
 #[derive(Clone, Debug, Serialize, Eq, PartialEq)]
 pub struct Talk {
@@ -23,14 +23,14 @@ pub struct Talk {
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct TalkMetadata {
 	// doesn't work well in `<title>`, wraps everything in a `<p>`...
-	// #[serde(default, deserialize_with = "pocky::de::markdown")]
+	// #[serde(default, deserialize_with = "de::markdown")]
 	pub title: String,
 	pub author: String,
 	#[serde(deserialize_with = "de::date", serialize_with = "ser::date_display")]
 	pub date: NaiveDate,
-	#[serde(default, deserialize_with = "pocky::de::option_markdown")]
+	#[serde(default, deserialize_with = "de::markdown_option")]
 	pub summary: Option<String>,
-	#[serde(default, deserialize_with = "pocky::de::comma_separated")]
+	#[serde(default, deserialize_with = "de::comma_separated")]
 	pub tags: Vec<String>,
 	pub cover: Option<HashMap<String, String>>,
 	pub accent_color: Option<String>,

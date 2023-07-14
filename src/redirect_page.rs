@@ -1,9 +1,10 @@
 use handlebars::Handlebars;
-use pocky::AsHtml;
 use serde::Serialize;
 use std::hash::Hash;
 use std::hash::Hasher;
 use std::path::PathBuf;
+
+use crate::pocky::AsHtml;
 
 #[derive(Debug, Eq, Serialize)]
 pub struct RedirectPage {

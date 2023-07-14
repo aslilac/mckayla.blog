@@ -2,6 +2,34 @@ use chrono::NaiveDate;
 use serde::Deserialize;
 use serde::Deserializer;
 
+use crate::pocky::md;
+
+pub fn comma_separated<'de, D>(de: D) -> Result<Vec<String>, D::Error>
+where
+	D: Deserializer<'de>,
+{
+	let tags = String::deserialize(de)?
+		.split(',')
+		.map(|tag| tag.trim().to_string())
+		.collect();
+
+	Ok(tags)
+}
+
+pub fn markdown<'de, D>(de: D) -> Result<String, D::Error>
+where
+	D: Deserializer<'de>,
+{
+	Ok(md::markdown_to_html(String::deserialize(de)?))
+}
+
+pub fn markdown_option<'de, D>(de: D) -> Result<String, D::Error>
+where
+	D: Deserializer<'de>,
+{
+	Ok(Option::<String>::deserialize(de)?.map(md::markdown_to_html))
+}
+
 pub fn date<'de, D>(de: D) -> Result<NaiveDate, D::Error>
 where
 	D: Deserializer<'de>,

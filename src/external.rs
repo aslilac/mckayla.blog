@@ -6,6 +6,8 @@ use serde::Serialize;
 use serde::Serializer;
 use std::cmp::Ordering;
 
+use crate::pocky::de;
+
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 pub struct External {
 	pub canonical_url: String,
@@ -31,9 +33,9 @@ pub struct ExternalMetadata {
 	pub author: String,
 	#[serde(default, deserialize_with = "de_date")]
 	pub date: NaiveDate,
-	#[serde(default, deserialize_with = "pocky::de::option_markdown")]
+	#[serde(default, deserialize_with = "de::markdown_option")]
 	pub summary: Option<String>,
-	#[serde(default, deserialize_with = "pocky::de::comma_separated")]
+	#[serde(default, deserialize_with = "de::comma_separated")]
 	pub tags: Vec<String>,
 }
 
