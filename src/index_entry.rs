@@ -4,12 +4,14 @@ use std::cmp::Ordering;
 
 use crate::blog_post::BlogPost;
 use crate::external::External;
+use crate::talk::Talk;
 
 #[derive(Clone, Debug, Serialize, Eq, PartialEq)]
 #[serde(untagged)]
 pub enum IndexEntry {
 	BlogPost(BlogPost),
 	External(External),
+	Talk(Talk),
 }
 
 impl IndexEntry {
@@ -17,6 +19,7 @@ impl IndexEntry {
 		match self {
 			IndexEntry::BlogPost(blog_post) => blog_post.metadata.date.as_ref(),
 			IndexEntry::External(external) => Some(&external.metadata.date),
+			IndexEntry::Talk(talk) => Some(&talk.metadata.date),
 		}
 	}
 }
@@ -41,5 +44,11 @@ impl From<BlogPost> for IndexEntry {
 impl From<External> for IndexEntry {
 	fn from(external: External) -> Self {
 		IndexEntry::External(external)
+	}
+}
+
+impl From<Talk> for IndexEntry {
+	fn from(talk: Talk) -> Self {
+		IndexEntry::Talk(talk)
 	}
 }

@@ -4,7 +4,6 @@ use pocky::AsHtml;
 use pocky::MarkdownPage;
 use serde::ser::SerializeStruct;
 use serde::Deserialize;
-use serde::Deserializer;
 use serde::Serialize;
 use serde::Serializer;
 use std::cmp::Ordering;
@@ -14,6 +13,7 @@ use std::path::PathBuf;
 use url::Url;
 
 use crate::config::BLOG;
+use crate::de;
 
 #[derive(Clone, Debug, Serialize, Eq, PartialEq)]
 pub struct BlogPost {
@@ -30,7 +30,7 @@ pub struct BlogPostMetadata {
 	// #[serde(default, deserialize_with = "pocky::de::markdown")]
 	pub title: String,
 	pub author: String,
-	#[serde(default, deserialize_with = "de_date")]
+	#[serde(default, deserialize_with = "de::date_option")]
 	pub date: Option<NaiveDate>,
 	#[serde(default, deserialize_with = "pocky::de::option_markdown")]
 	pub summary: Option<String>,
@@ -44,6 +44,7 @@ pub struct BlogPostMetadata {
 	pub lobsters: Option<String>,
 }
 
+// Custom `Serialize` implementation so that we can have two formats of `date`
 impl Serialize for BlogPostMetadata {
 	fn serialize<S>(&self, ser: S) -> Result<S::Ok, S::Error>
 	where
@@ -79,18 +80,6 @@ pub enum BlogPostStatus {
 	Unlisted,
 }
 
-fn de_date<'de, D>(de: D) -> Result<Option<NaiveDate>, D::Error>
-where
-	D: Deserializer<'de>,
-{
-	let date = Option::<String>::deserialize(de)?.map(|date_string| {
-		NaiveDate::parse_from_str(&date_string, "%Y.%m.%d")
-			.unwrap_or_else(|_| panic!("invalid date: {}", date_string))
-	});
-
-	Ok(date)
-}
-
 impl<P> From<P> for BlogPost
 where
 	P: AsRef<Path>,
@@ -101,13 +90,17 @@ where
 		let mut path = path.as_ref().to_owned();
 		path.set_extension("html");
 
+		let metadata = page
+			.metadata
+			.expect(&format!("missing blog post metadata in {}", path.display()));
+
 		BlogPost {
 			canonical_url: BLOG
 				.canonical_origin
 				.join(path.to_str().expect("path contains invalid characters"))
 				.expect("failed to create canonical_url"),
 			path,
-			metadata: page.metadata.expect("missing blog post metadata"),
+			metadata,
 			content: page.content,
 		}
 	}

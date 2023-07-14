@@ -9,10 +9,13 @@ use std::io;
 
 mod blog_post;
 mod config;
+mod de;
 mod external;
 mod index_entry;
 mod options;
 mod redirect_page;
+mod ser;
+mod talk;
 
 use blog_post::BlogPost;
 use blog_post::BlogPostStatus::{Published, Unlisted};
@@ -21,6 +24,7 @@ use config::EXTERNAL_LINKS;
 use config::REDIRECTS;
 use index_entry::IndexEntry;
 use options::Options;
+use talk::Talk;
 
 fn main() -> io::Result<()> {
 	let options = env::args().skip(1).collect::<Options>();
@@ -39,7 +43,7 @@ fn main() -> io::Result<()> {
 	}
 
 	// Collect posts into a `PageCollection`
-	let mut posts = PageCollection::<BlogPost>::from("./content/posts/");
+	let mut posts = PageCollection::<BlogPost>::from("content/posts/");
 	if options.publish {
 		// Skip unpublished posts if we're building a version for publishing
 		posts.retain(|post| post.metadata.status == Published || post.metadata.status == Unlisted);
@@ -62,12 +66,25 @@ fn main() -> io::Result<()> {
 
 	// Hide unlisted posts from the index and RSS feeds
 	posts.retain(|post| post.metadata.status != Unlisted);
-	let posts = posts.into_set();
+	let posts = posts.into_iter().collect::<BTreeSet<_>>();
+
+	// Collect talks into a `PageCollection`
+	let talks = PageCollection::<Talk>::from("content/talks/");
+
+	// Render talks
+	for talk in talks.iter() {
+		let output_path = options.output.join(&talk.path);
+		fs::create_dir_all(output_path.parent().unwrap())
+			.expect("failed to create output directory");
+		fs::write(output_path, talk.as_html())?;
+	}
 
 	// Create the index entries set from posts and external links
 	let post_entries = posts.iter().cloned().map(Into::into);
+	let talk_entries = talks.iter().cloned().map(Into::into);
 	let external_link_entries = EXTERNAL_LINKS.iter().cloned().map(Into::into);
 	let index_entries = post_entries
+		.chain(talk_entries)
 		.chain(external_link_entries)
 		.collect::<BTreeSet<IndexEntry>>();
 
@@ -90,7 +107,7 @@ fn main() -> io::Result<()> {
 	fs::write(options.output.join("feed.xml"), rss_feed)?;
 
 	// Copy assets from src/static/ to the output directory
-	for file in fs::read_dir("./src/static")?
+	for file in fs::read_dir("content/resources/")?
 		.flatten()
 		.map(|entry| entry.path())
 		.filter(|path| path.is_file())

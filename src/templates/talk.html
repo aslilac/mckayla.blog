@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<title>{{title}}</title>
+<meta charset="utf-8" />
+<link rel="icon" href="https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif" />
+<link rel="preload" href="https://cdn.mckayla.cloud/fonts/outfit/Outfit-Variable.woff2"
+	as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="stylesheet" href="/blog.css" />
+<!--<link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism.min.css" />-->
+<link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism.min.css" media="(prefers-color-scheme: light)" />
+<link rel="stylesheet" href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css" media="(prefers-color-scheme: dark)" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="og:title" href="{{title}}" />
+<link rel="og:type" href="website" />
+<link rel="og:image" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
+<link rel="og:image:secure_url" href="https://cdn.mckayla.cloud/-/97ef05b2b92b44c687dfcccfb32dff16/cute3.avif" />
+{{#if accent_color}}
+<style>
+a {
+	color: {{accent_color}};
+}
+</style>
+{{/if}}</head>
+<body>
+{{#with cover}}
+<div>
+<picture>
+{{#if avif}}<source type="image/avif" srcset="{{avif}}" />{{/if}}
+{{#if webp}}<source type="image/webp" srcset="{{webp}}" />{{/if}}
+{{#if jpeg}}<source type="image/jpeg" srcset="{{jpeg}}" />{{/if}}
+<img class="cover" src="{{default}}" />
+</picture>
+</div>
+{{/with}}
+<main>
+<nav><a href="/">mckayla.blog</a> / talks /</nav>
+<header>
+<h1>{{{title}}}</h1>
+</header>
+<hr />
+{{#each content}}
+	<article>{{{this}}}</article>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<hr />
+{{/each}}
+<footer>
+<nav>
+&hearts;
+<a href="https://mckayla.dev">McKayla</a> &middot;
+<a href="https://github.com/aslilac">Github</a> &middot;
+<a href="/feed.xml">RSS</a>
+</nav>
+</footer>
+</main>
+<script src="https://unpkg.com/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://unpkg.com/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://unpkg.com/prismjs-gleam@1/gleam.js"></script>
+</body>
+</html>
