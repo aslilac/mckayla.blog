@@ -2,9 +2,9 @@ use serde::de::DeserializeOwned;
 use std::fs;
 use std::path::Path;
 
-use crate::md::markdown_to_html;
-use crate::page::text::TextPage;
-use crate::AsHtml;
+use crate::pocky::md::markdown_to_html;
+use crate::pocky::page::text::TextPage;
+use crate::pocky::AsHtml;
 
 #[derive(Clone, Debug)]
 pub struct MarkdownPage<M: DeserializeOwned> {

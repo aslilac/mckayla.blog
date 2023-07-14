@@ -9,6 +9,7 @@ pub struct HtmlPage {
 }
 
 impl HtmlPage {
+	#[allow(dead_code)]
 	pub fn new(content: String) -> Self {
 		Self { content }
 	}

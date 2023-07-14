@@ -16,6 +16,7 @@ where
 	Ok(tags)
 }
 
+#[allow(dead_code)]
 pub fn markdown<'de, D>(de: D) -> Result<String, D::Error>
 where
 	D: Deserializer<'de>,
@@ -23,7 +24,7 @@ where
 	Ok(md::markdown_to_html(String::deserialize(de)?))
 }
 
-pub fn markdown_option<'de, D>(de: D) -> Result<String, D::Error>
+pub fn markdown_option<'de, D>(de: D) -> Result<Option<String>, D::Error>
 where
 	D: Deserializer<'de>,
 {

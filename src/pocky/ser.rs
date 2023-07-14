@@ -8,6 +8,7 @@ where
 	ser.serialize_str(&date.format("%A, %B %-d, %Y").to_string())
 }
 
+#[allow(dead_code)]
 pub fn date_display_option<S>(date: &Option<NaiveDate>, ser: S) -> Result<S::Ok, S::Error>
 where
 	S: Serializer,

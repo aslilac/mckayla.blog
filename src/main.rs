@@ -7,13 +7,11 @@ use std::io;
 
 mod blog_post;
 mod config;
-mod de;
 mod external;
 mod index_entry;
 mod options;
 mod pocky;
 mod redirect_page;
-mod ser;
 mod talk;
 
 use blog_post::BlogPost;
@@ -23,8 +21,8 @@ use config::EXTERNAL_LINKS;
 use config::REDIRECTS;
 use index_entry::IndexEntry;
 use options::Options;
+use pocky::pages_from_directory;
 use pocky::AsHtml;
-use pocky::PageCollection;
 use talk::Talk;
 
 fn main() -> io::Result<()> {
@@ -44,7 +42,10 @@ fn main() -> io::Result<()> {
 	}
 
 	// Collect posts into a `PageCollection`
-	let mut posts = PageCollection::<BlogPost>::from("content/posts/");
+	let mut posts = pages_from_directory("content/posts/").collect::<Vec<BlogPost>>();
+	posts.iter_mut().for_each(|post| {
+		post.path = post.path.strip_prefix("content/").unwrap().to_owned();
+	});
 	if options.publish {
 		// Skip unpublished posts if we're building a version for publishing
 		posts.retain(|post| post.metadata.status == Published || post.metadata.status == Unlisted);
@@ -59,9 +60,7 @@ fn main() -> io::Result<()> {
 
 	// Render posts
 	for post in posts.iter() {
-		let output_path = options
-			.output
-			.join(&post.path.strip_prefix("content/").unwrap());
+		let output_path = options.output.join(&post.path);
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
 		fs::write(output_path, post.as_html())?;
@@ -69,16 +68,16 @@ fn main() -> io::Result<()> {
 
 	// Hide unlisted posts from the index and RSS feeds
 	posts.retain(|post| post.metadata.status != Unlisted);
-	let posts = posts.into_iter().collect::<BTreeSet<_>>();
 
 	// Collect talks into a `PageCollection`
-	let talks = PageCollection::<Talk>::from("content/talks/");
+	let mut talks = pages_from_directory("content/talks/").collect::<Vec<Talk>>();
+	talks.iter_mut().for_each(|talk| {
+		talk.path = talk.path.strip_prefix("content/").unwrap().to_owned();
+	});
 
 	// Render talks
-	for talk in talks {
-		let output_path = options
-			.output
-			.join(&talk.path.strip_prefix("content/").unwrap());
+	for talk in talks.iter() {
+		let output_path = options.output.join(&talk.path);
 		fs::create_dir_all(output_path.parent().unwrap())
 			.expect("failed to create output directory");
 		fs::write(output_path, talk.as_html())?;
