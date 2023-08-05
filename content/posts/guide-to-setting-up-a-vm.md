@@ -30,6 +30,10 @@ mkdir /home/$YOU/.ssh/
 chown $YOU /home/$YOU/.ssh/
 chgrp $YOU /home/$YOU/.ssh/
 cp /root/.ssh/authorized_keys /home/$YOU/.ssh/authorized_keys
+# Alternatively, 
+# wget https://github.com/$YOUR_GITHUB_USER.keys -O /home/$YOU/.ssh/authorized_keys
+# wget https://gitlab.com/$YOUR_GITLAB_USER.keys -O /home/$YOU/.ssh/authorized_keys
+# wget https://meta.sr.ht/\~$YOUR_SOURCEHUT_USER.keys -O /home/$YOU/.ssh/authorized_keys
 chown $YOU /home/$YOU/.ssh/authorized_keys
 chgrp $YOU /home/$YOU/.ssh/authorized_keys
 usermod -a -G wheel $YOU # wheel allows you to run `sudo`
@@ -38,15 +42,6 @@ usermod -a -G wheel $YOU # wheel allows you to run `sudo`
 Now disconnect, and login as your new less-priviledged user
 
 ## Setting up your system
-
-### RHEL/Rocky
-
-- `sudo yum install gcc`
-- `sudo yum install tar`
-- `sudo yum install epel-release`
-  - `sudo yum install htop`
-
-## Getting ready for development
 
 ### SSH Key
 
@@ -67,32 +62,41 @@ sudo chgrp $USER /Source/
 cd /Source/
 ```
 
-### Rust
+### RHEL/Rocky
 
-Just install [rustup](https://rustup.rs) the normal way.
+Lately I've been using Rocky Linux for this sort of thing. So I'll cover some of my setup I usually do, but from here on out, this is going to be much less general.
 
-### Helix (from source)
-
-Requires Rust and a C compiler. Now that we have both, let's get our text editor set up.
+Make sure you have the basics around! Feel free to filter out stuff you don't use. This is mostly just a list to act as a quick reference of common package names.
 
 ```sh
-cd /Source/
-git clone git@github.com:helix-editor/helix.git
-cd helix/
-cargo install --path helix-term/
+sudo yum install \
+  cmake \
+  curl \
+  dash \
+  gcc \
+  glibc-devel \
+  golang \
+  make \
+  sqlite \
+  tar \
+  tree \
+  wget
 ```
 
-### Go
-
-Figure out the URL of the latest tarball for your platform from the [Go downloads] page.
+Optional EPEL stuff:
 
 ```sh
-cd ~
-wget $GO
-tar -xzf go1.*
-mv go/ .go/
+sudo yum install epel-release
+sudo yum update
+sudo yum install \
+  bat \
+  htop
 ```
 
-Make sure you add `$HOME/.go/bin` to your PATH
+Helix is my terminal editor of choice.
 
-[go downloads]: https://go.dev/dl/
+```sh
+sudo yum copr enable varlad/helix
+sudo yum update
+sudo yum install helix
+```
