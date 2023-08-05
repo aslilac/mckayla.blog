@@ -36,7 +36,7 @@ cp /root/.ssh/authorized_keys /home/$YOU/.ssh/authorized_keys
 # wget https://meta.sr.ht/\~$YOUR_SOURCEHUT_USER.keys -O /home/$YOU/.ssh/authorized_keys
 chown $YOU /home/$YOU/.ssh/authorized_keys
 chgrp $YOU /home/$YOU/.ssh/authorized_keys
-usermod -a -G wheel $YOU # wheel allows you to run `sudo`
+usermod -a -G wheel $YOU # adds you to the wheel group, wheel allows you to run `sudo`
 ```
 
 Now disconnect, and login as your new less-priviledged user
@@ -49,8 +49,10 @@ You'll probably want an SSH key for Github and such.
 
 ```sh
 ssh-keygen -t ed25519 -C "your@email.com"
-cat ~/.ssh/id_ed25519.pub
+cat ~/.ssh/id_ed25519.pub # Paste the output of this into Github, etc.
 ```
+
+One day I want to figure out how to use an ssh-agent so keys aren't just laying around. Today is not that day.
 
 ### A folder for your stuff
 
@@ -100,3 +102,5 @@ sudo yum copr enable varlad/helix
 sudo yum update
 sudo yum install helix
 ```
+
+I'll also install Rust using the usual [rustup](https://rustup.rs) script.
