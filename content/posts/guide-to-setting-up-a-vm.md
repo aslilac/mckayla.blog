@@ -66,7 +66,9 @@ cd /Source/
 
 ### RHEL/Rocky
 
-Lately I've been using Rocky Linux for this sort of thing. So I'll cover some of my setup I usually do, but from here on out, this is going to be much less general.
+Lately I've been using Rocky Linux for this sort of thing. So I'll cover some of my setup I usually do, but from here on out, this is going to be much less general. It will also get less general as you read further. We'll start with common things most people will want, and end up with some things that are really just for me.
+
+---
 
 Make sure you have the basics around! Feel free to filter out stuff you don't use. This is mostly just a list to act as a quick reference of common package names.
 
@@ -76,6 +78,7 @@ sudo yum install \
   curl \
   dash \
   gcc \
+  git \
   glibc-devel \
   golang \
   make \
@@ -95,6 +98,29 @@ sudo yum install \
   htop
 ```
 
+I'll also install Rust using the usual [rustup](https://rustup.rs) script. Once you've done that, I'll usually run these:
+
+```sh
+rustup install nightly
+rustup component add rust-analyzer --toolchain stable
+rustup component add rust-analyzer --toolchain nightly
+```
+
+If you installed Go, these are nice to have around:
+
+```sh
+go install golang.org/x/tools/gopls@latest
+go install honnef.co/go/tools/cmd/staticcheck@latest
+go install mvdan.cc/gofumpt@latest
+```
+
+...and you'll also want to configure some env variables...
+
+```sh
+export GOPATH="$HOME/.go"
+export PATH="$GOPATH/bin:$PATH"
+```
+
 Helix is my terminal editor of choice.
 
 ```sh
@@ -103,4 +129,26 @@ sudo yum update
 sudo yum install helix
 ```
 
-I'll also install Rust using the usual [rustup](https://rustup.rs) script.
+Now we'll install Kirbo (an nvm and npm alternative) and some other tools I've made, but that anyone is welcome to use:
+
+```sh
+cargo install \
+  cargo-update \ # I didn't make this one, but it helps keep the others up to date!
+  betty \
+  kc \
+  kirbo \
+  mkscratch \
+  okie
+```
+
+Then install node with Kirbo!
+
+```sh
+# TODO
+```
+
+At this point, we've got a machine that can provide a pretty well formed workstation for Go, Rust, and JavaScript/TypeScript code!
+
+As a bit of an aside: unfortunately, as much as I love Gleam, Rocky doesn't currently have packages for Erlang, Rebar3, Elixir, or Gleam itself. Setting up a COPR Gleam package is currently on my to-do list, since I use Fedora whenever I want a Linux install with a desktop, and that would also stand to benefit from the work. I'll update this once I've got a working "Gleam on Rocky" setup to share.
+
+...anyway, you should have a mostly functional dev machine! TSome tweaks to your `PATH` here and there, maybe a few more packages, but at least for me this is a g
