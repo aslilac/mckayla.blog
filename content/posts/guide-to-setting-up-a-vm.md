@@ -30,7 +30,7 @@ mkdir /home/$YOU/.ssh/
 chown $YOU /home/$YOU/.ssh/
 chgrp $YOU /home/$YOU/.ssh/
 cp /root/.ssh/authorized_keys /home/$YOU/.ssh/authorized_keys
-# Alternatively, 
+# Alternatively,
 # wget https://github.com/$YOUR_GITHUB_USER.keys -O /home/$YOU/.ssh/authorized_keys
 # wget https://gitlab.com/$YOUR_GITLAB_USER.keys -O /home/$YOU/.ssh/authorized_keys
 # wget https://meta.sr.ht/\~$YOUR_SOURCEHUT_USER.keys -O /home/$YOU/.ssh/authorized_keys
@@ -151,4 +151,4 @@ At this point, we've got a machine that can provide a pretty well formed worksta
 
 As a bit of an aside: unfortunately, as much as I love Gleam, Rocky doesn't currently have packages for Erlang, Rebar3, Elixir, or Gleam itself. Setting up a COPR Gleam package is currently on my to-do list, since I use Fedora whenever I want a Linux install with a desktop, and that would also stand to benefit from the work. I'll update this once I've got a working "Gleam on Rocky" setup to share.
 
-...anyway, you should have a mostly functional dev machine! TSome tweaks to your `PATH` here and there, maybe a few more packages, but at least for me this is a g
+Some tweaks to your `PATH`, maybe a few more packages of your choosing, and you should have a mostly functional dev machine!
