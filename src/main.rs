@@ -36,8 +36,7 @@ fn main() -> io::Result<()> {
 				.strip_prefix("/")
 				.expect("`from` for redirect should be an absolute url"),
 		);
-		fs::create_dir_all(output_path.parent().unwrap())
-			.expect("failed to create output directory");
+		fs::create_dir_all(output_path.parent().unwrap()).expect("failed to create output directory");
 		fs::write(output_path, redirect.as_html())?;
 	}
 
@@ -45,6 +44,7 @@ fn main() -> io::Result<()> {
 	let mut posts = pages_from_directory("content/posts/").collect::<Vec<BlogPost>>();
 	posts.iter_mut().for_each(|post| {
 		post.path = post.path.strip_prefix("content/").unwrap().to_owned();
+		post.canonicalize();
 	});
 	if options.publish {
 		// Skip unpublished posts if we're building a version for publishing
@@ -61,8 +61,7 @@ fn main() -> io::Result<()> {
 	// Render posts
 	for post in posts.iter() {
 		let output_path = options.output.join(&post.path);
-		fs::create_dir_all(output_path.parent().unwrap())
-			.expect("failed to create output directory");
+		fs::create_dir_all(output_path.parent().unwrap()).expect("failed to create output directory");
 		fs::write(output_path, post.as_html())?;
 	}
 
@@ -78,8 +77,7 @@ fn main() -> io::Result<()> {
 	// Render talks
 	for talk in talks.iter() {
 		let output_path = options.output.join(&talk.path);
-		fs::create_dir_all(output_path.parent().unwrap())
-			.expect("failed to create output directory");
+		fs::create_dir_all(output_path.parent().unwrap()).expect("failed to create output directory");
 		fs::write(output_path, talk.as_html())?;
 	}
 

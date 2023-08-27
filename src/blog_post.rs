@@ -50,9 +50,8 @@ impl Serialize for BlogPostMetadata {
 	where
 		S: Serializer,
 	{
-		let ser_date = |date: &Option<NaiveDate>, format: &str| {
-			date.map(|date| date.format(format).to_string())
-		};
+		let ser_date =
+			|date: &Option<NaiveDate>, format: &str| date.map(|date| date.format(format).to_string());
 
 		let mut state = ser.serialize_struct("BlogPostMetadata", 10)?;
 		state.serialize_field("title", &self.title)?;
@@ -95,10 +94,7 @@ where
 			.expect(&format!("missing blog post metadata in {}", path.display()));
 
 		BlogPost {
-			canonical_url: BLOG
-				.canonical_origin
-				.join(path.to_str().expect("path contains invalid characters"))
-				.expect("failed to create canonical_url"),
+			canonical_url: BlogPost::canonicalize_path(&path),
 			path,
 			metadata,
 			content: page.content,
@@ -123,5 +119,18 @@ impl AsHtml for BlogPost {
 		renderer
 			.render_template(include_str!("./templates/blog_post.html"), self)
 			.expect("failed to render handlebars")
+	}
+}
+
+impl BlogPost {
+	fn canonicalize_path(path: &Path) -> Url {
+		BLOG
+			.canonical_origin
+			.join(path.to_str().expect("path contains invalid characters"))
+			.expect("failed to create canonical_url")
+	}
+
+	pub fn canonicalize(&mut self) {
+		self.canonical_url = Self::canonicalize_path(&self.path)
 	}
 }
