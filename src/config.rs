@@ -38,15 +38,23 @@ pub static BLOG: Lazy<BlogMetadata> = Lazy::new(|| BlogMetadata {
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
 	serde_json::from_value(json!([
-			// {
-			// 	"canonical_url": "https://xaslilac.github.io/TeenageWeb/",
-			// 	"path": "https://xaslilac.github.io/TeenageWeb/",
-			// 	"title": "The Teenage Web",
-			// 	"author": "Kayla Washburn",
-			// 	"date": "2023.5.2",
-			// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
-			// }
-		]))
+		// {
+		// 	"canonical_url": "https://xaslilac.github.io/TeenageWeb/",
+		// 	"path": "https://xaslilac.github.io/TeenageWeb/",
+		// 	"title": "The Teenage Web",
+		// 	"author": "Kayla Washburn",
+		// 	"date": "2023.5.2",
+		// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
+		// },
+		{
+			"canonical_url": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
+			"path": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
+			"title": "Executive Function Theft",
+			"author": "Abigail Goben",
+			"date": "2023.8.14",
+			"summary": "This one registers loudly.",
+		},
+	]))
 	.expect("invalid external link set")
 });
 
@@ -54,5 +62,5 @@ pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
 // * Configure redirects here!!                                                          *
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 pub static REDIRECTS: Lazy<HashSet<RedirectPage>> = redirect_config!(
-  "/posts/gleam-traits.html" => "/posts/all-you-need-is-data-and-functions.html",
+	"/posts/gleam-traits.html" => "/posts/all-you-need-is-data-and-functions.html",
 );
