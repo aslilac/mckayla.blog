@@ -25,7 +25,7 @@ ssh root@new.vm
 # Now you should be connected to your VM!
 YOU="your name here"
 echo $YOU # Shells are weird, make sure this works!
-adduser $YOU
+adduser $YOU -G adm,wheel # "admin" lets you see logs and such, wheel gives you `sudo` powers
 mkdir /home/$YOU/.ssh/
 chown $YOU /home/$YOU/.ssh/
 chgrp $YOU /home/$YOU/.ssh/
@@ -36,7 +36,7 @@ cp /root/.ssh/authorized_keys /home/$YOU/.ssh/authorized_keys
 # wget https://meta.sr.ht/\~$YOUR_SOURCEHUT_USER.keys -O /home/$YOU/.ssh/authorized_keys
 chown $YOU /home/$YOU/.ssh/authorized_keys
 chgrp $YOU /home/$YOU/.ssh/authorized_keys
-usermod -a -G wheel $YOU # adds you to the wheel group, wheel allows you to run `sudo`
+# usermod -a -G wheel $YOU
 ```
 
 Now disconnect, and login as your new less-priviledged user
