@@ -47,6 +47,14 @@ pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
 		// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
 		// },
 		{
+			"canonical_url": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
+			"path": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
+			"title": "Running one's own root Certificate Authority in 2023",
+			"author": "Michal Jirků",
+			"date": "2023.9.16",
+			"summary": "A tale how running your own X509 root CA—for internal services—changed in the last 20 years.",
+		},
+		{
 			"canonical_url": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
 			"path": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
 			"title": "Executive Function Theft",
