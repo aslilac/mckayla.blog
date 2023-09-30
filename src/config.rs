@@ -47,6 +47,14 @@ pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
 		// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
 		// },
 		{
+			"canonical_url": "https://drewdevault.com/2023/08/29/2023-08-29-AI-crap.html",
+			"path": "https://drewdevault.com/2023/08/29/2023-08-29-AI-crap.html",
+			"title": "AI crap",
+			"author": "Drew DeVault",
+			"date": "2023.8.29",
+			"summary": "The singularity is not coming, but the most realistic promises of AI are going to make the world worse.",
+		},
+		{
 			"canonical_url": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
 			"path": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
 			"title": "Running one's own root Certificate Authority in 2023",

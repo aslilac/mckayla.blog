@@ -29,8 +29,7 @@ impl<M: DeserializeOwned> TextPage<M> {
 				.map(|line| format!("{}\n", line))
 				.collect::<String>();
 
-			serde_yaml::from_str(&metadata_source)
-				.expect("failed to deserialize frontmatter metadata")
+			serde_yaml::from_str(&metadata_source).expect("failed to deserialize frontmatter metadata")
 		});
 
 		// The remaining lines are the actual document content
