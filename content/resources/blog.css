@@ -2,8 +2,7 @@
 	font-family: "Outfit";
 	font-style: normal;
 	font-display: swap;
-	font-weight: 100 900;
-	src: url("https://cdn.mckayla.cloud/fonts/Outfit.woff2") format("woff2");
+	src: url("https://cdn.mckayla.cloud/fonts/Outfit.woff2") format(woff2);
 }
 
 html {
@@ -35,15 +34,13 @@ h6 {
 	font-family: "Cormorant";
 	font-style: normal;
 	font-display: swap;
-	font-weight: 600;
-	src: url("https://cdn.mckayla.cloud/fonts/Cormorant-SemiBold.woff2") format(woff2);
+	src: url("https://cdn.mckayla.cloud/fonts/Cormorant.woff2") format(woff2);
 }
 
 @font-face {
 	font-family: "Cascadia Code";
 	font-style: normal;
 	font-display: swap;
-	font-weight: 600;
 	src: url("https://cdn.mckayla.cloud/fonts/CascadiaCode.woff2") format(woff2);
 }
 
