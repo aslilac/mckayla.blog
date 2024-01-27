@@ -50,6 +50,12 @@ main {
 	max-width: 70ch;
 }
 
+@media screen and (max-width: 500px) {
+	main {
+		padding: 3em 2em;
+	}
+}
+
 main.index {
 	max-width: 50ch;
 }
@@ -170,7 +176,15 @@ footer {
 footer nav {
 	display: flex;
 	flex-direction: row;
-	gap: 12px;
+	gap: 16px;
+	align-items: center;
+}
+
+.footer-wrap {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4px 16px;
 }
 
 .cover {
