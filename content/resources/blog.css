@@ -27,6 +27,18 @@
 	src: url("https://cdn.mckayla.cloud/fonts/CascadiaCode.woff2") format(woff2);
 }
 
+:root {
+	/* --accent: #f8c; /* pink */
+	--accent: #1441e0; /* blue */
+}
+
+@media screen and (prefers-color-scheme: dark) {
+	:root {
+		/* --accent: #fbed7a; /* yellow */
+		--accent: #184bff; /* blue */
+	}
+}
+
 html {
 	font-family: "Outfit", sans-serif;
 	font-size: 18px;
@@ -53,8 +65,17 @@ h6 {
 }
 
 body {
-	background-color: #fff7ec;
 	margin: 0;
+
+	background-color: #fff7ec;
+	color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #000;
+		color: #fff;
+	}
 }
 
 hr {
@@ -78,14 +99,11 @@ article {
 }
 
 a {
-	/*color: #caab00;*/
-	/*color: #ca0075;*/
-	/* color: #f8c; */
-	color: #1441e0;
+	color: var(--accent);
 }
 
 .index-header {
-	color: #1441e0;
+	color: var(--accent);
 }
 
 .site-links {
@@ -166,17 +184,5 @@ footer nav {
 @media (orientation: portrait) {
 	.cover {
 		height: 40vh;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	body {
-		background-color: #060607;
-		color: #fff;
-	}
-
-	a {
-		/* color: #4d5; /* green */
-		/* color: #fbed7a; /* yellow */
 	}
 }
