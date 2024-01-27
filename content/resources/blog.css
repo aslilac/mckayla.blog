@@ -108,20 +108,35 @@ a {
 	color: var(--accent);
 }
 
-.index-header {
+.index header {
 	color: var(--accent);
 }
 
-.site-links {
+.header-wrap {
 	font-family: "Reenie Beanie";
+
 	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: baseline;
-	gap: 64px;
-	font-size: 24px;
+	gap: 24px 64px;
 }
 
 .main-title {
 	font-size: 54px;
+}
+
+.site-links {
+	display: flex;
+	flex-direction: row;
+	gap: 64px;
+	font-size: 24px;
+}
+
+@media screen and (max-width: 500px) {
+	.site-links {
+		gap: 24px;
+	}
 }
 
 aside {
