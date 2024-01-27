@@ -5,6 +5,8 @@
 <title>{{title}}</title>
 <meta charset="utf-8" />
 <link rel="icon" href="{{favicon}}" />
+<link rel="preload" href="https://cdn.mckayla.cloud/fonts/ReenieBeanie-Regular.woff2"
+	as="font" type="font/woff2" crossorigin="anonymous" />
 <link rel="preload" href="https://cdn.mckayla.cloud/fonts/Outfit.woff2"
 	as="font" type="font/woff2" crossorigin="anonymous" />
 <link rel="stylesheet" href="/resources/blog.css" />
@@ -17,12 +19,12 @@
 <body>
 <main class="index">
 <header class="index-header">
-<picture>
-<source type="image/avif" width=200 height=200 srcset="https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.avif" />
-<source type="image/webp" width=200 height=200 srcset="https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.webp" />
-<img width=200 height=200 src="https://cdn.mckayla.cloud/-/764b1512ee1f490a951e9c00d9ded4b2/Doodle.png" />
-</picture>
-<h1>{{title}}</h1>
+<nav class="site-links">
+<h1 class="main-title">{{title}}</h1>
+<a href="https://mckayla.blog" style="text-decoration: underline;">Blog</a>
+<a href="https://mckayla.art" style="text-decoration: none;">Photolog</a>
+<a href="https://mckayla.dev" style="text-decoration: none;">Worklog</a>
+</nav>
 <p>{{subtitle}}</p>
 </header>
 {{/with}}
@@ -30,8 +32,8 @@
 {{#each posts}}
 <article class="post-summary">
 	<a href="{{path}}"><h1>{{{title}}}</h1></a>
-	{{#if summary}}<div>{{{summary}}}</div>{{/if}}
 	<sub>by {{author}}{{#if date}} &mdash; {{date}}{{/if}}</sub>
+	{{#if summary}}<div>{{{summary}}}</div>{{/if}}
 	<!-- <a href="{{path}}">Read more</a> -->
 </article>
 {{/each}}
@@ -39,7 +41,7 @@
 <nav>
 &hearts;
 <a href="https://mckayla.dev">McKayla</a> &middot;
-<a href="https://github.com/aslilac">Github</a> &middot;
+<a href="https://github.com/aslilac">Git</a> &middot;
 <a href="https://twitch.tv/aslilac">Twitch</a> &middot;
 <a href="https://youtube.com/@aslilac">YouTube</a> &middot;
 <a href="/feed.xml">RSS</a>

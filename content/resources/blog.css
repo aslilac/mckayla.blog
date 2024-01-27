@@ -1,33 +1,16 @@
 @font-face {
+	font-family: "Reenie Beanie";
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+	src: url("https://cdn.mckayla.cloud/fonts/ReenieBeanie-Regular.woff2") format(woff2);
+}
+
+@font-face {
 	font-family: "Outfit";
 	font-style: normal;
 	font-display: swap;
 	src: url("https://cdn.mckayla.cloud/fonts/Outfit.woff2") format(woff2);
-}
-
-html {
-	font-family: "Outfit", sans-serif;
-	font-size: 18px;
-	line-height: 1.75;
-}
-
-main {
-	margin: auto;
-	padding: 3em 1em;
-	max-width: 70ch;
-}
-
-main.index {
-	max-width: 50ch;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 3em 0 1em;
 }
 
 @font-face {
@@ -44,7 +27,33 @@ h6 {
 	src: url("https://cdn.mckayla.cloud/fonts/CascadiaCode.woff2") format(woff2);
 }
 
+html {
+	font-family: "Outfit", sans-serif;
+	font-size: 18px;
+	line-height: 1.75;
+}
+
+main {
+	padding: 3em 5em;
+	max-width: 70ch;
+}
+
+main.index {
+	max-width: 50ch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 3em 0 1em;
+	line-height: 1.2;
+}
+
 body {
+	background-color: #fff7ec;
 	margin: 0;
 }
 
@@ -60,18 +69,35 @@ article {
 	margin: 2em 0 3em;
 }
 
+.post-summary sub {
+	opacity: 0.8;
+}
+
 .post-summary p {
-	margin: 0;
+	margin: 0.5em 0 0;
 }
 
 a {
 	/*color: #caab00;*/
 	/*color: #ca0075;*/
-	color: #f8c;
+	/* color: #f8c; */
+	color: #1441e0;
 }
 
 .index-header {
-	text-align: center;
+	color: #1441e0;
+}
+
+.site-links {
+	font-family: "Reenie Beanie";
+	display: flex;
+	align-items: baseline;
+	gap: 64px;
+	font-size: 24px;
+}
+
+.main-title {
+	font-size: 54px;
 }
 
 aside {
@@ -145,7 +171,7 @@ footer nav {
 
 @media (prefers-color-scheme: dark) {
 	body {
-		background-color: #1b1b1b;
+		background-color: #060607;
 		color: #fff;
 	}
 
