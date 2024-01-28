@@ -33,8 +33,9 @@ pub struct TalkMetadata {
 	pub summary: Option<String>,
 	#[serde(default, deserialize_with = "de::comma_separated")]
 	pub tags: Vec<String>,
-	pub cover: Option<HashMap<String, String>>,
 	pub accent_color: Option<String>,
+	pub cover: Option<HashMap<String, String>>,
+	pub youtube: Option<String>,
 }
 
 impl<P> From<P> for Talk

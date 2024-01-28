@@ -6,6 +6,7 @@ accent_color: "#f9b14d"
 cover:
   avif: https://cdn.mckayla.cloud/-/954d2u18v140dv/zig-cover.avif
   default: https://cdn.mckayla.cloud/-/954d2u18v140dv/zig-cover.webp
+youtube: https://youtu.be/UQ-7k8uAc3c
 ---
 
 <!-- Given that work on the official package manager has begun, I thought it'd be fun to talk about package management, package authoring, and things to consider for the future. -->

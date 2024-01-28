@@ -30,16 +30,16 @@ pub struct BlogPostMetadata {
 	// #[serde(default, deserialize_with = "de::markdown")]
 	pub title: String,
 	pub author: String,
+	#[serde(default)]
+	pub status: BlogPostStatus,
 	#[serde(default, deserialize_with = "de::date_option")]
 	pub date: Option<NaiveDate>,
 	#[serde(default, deserialize_with = "de::markdown_option")]
 	pub summary: Option<String>,
 	#[serde(default, deserialize_with = "de::comma_separated")]
 	pub tags: Vec<String>,
-	pub cover: Option<HashMap<String, String>>,
 	pub accent_color: Option<String>,
-	#[serde(default)]
-	pub status: BlogPostStatus,
+	pub cover: Option<HashMap<String, String>>,
 	pub hn: Option<String>,
 	pub lobsters: Option<String>,
 }
