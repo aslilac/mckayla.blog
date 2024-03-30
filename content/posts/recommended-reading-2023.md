@@ -1,6 +1,5 @@
 ---
-title: Recommended Reading (2023)
-description: Some stuff I really enjoyed reading this year
+title: Recommended Reading from 2023
 author: Kayla Washburn
 date: 2023.12.31
 accent_color: "#d178d3"
