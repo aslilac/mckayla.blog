@@ -46,30 +46,6 @@ pub static EXTERNAL_LINKS: Lazy<BTreeSet<External>> = Lazy::new(|| {
 		// 	"date": "2023.5.2",
 		// 	"summary": "The web used to be a lot more fun. and a lot easier, too.",
 		// },
-		{
-			"canonical_url": "https://drewdevault.com/2023/08/29/2023-08-29-AI-crap.html",
-			"path": "https://drewdevault.com/2023/08/29/2023-08-29-AI-crap.html",
-			"title": "AI crap",
-			"author": "Drew DeVault",
-			"date": "2023.8.29",
-			"summary": "The singularity is not coming, but the most realistic promises of AI are going to make the world worse.",
-		},
-		{
-			"canonical_url": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
-			"path": "https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/",
-			"title": "Running one's own root Certificate Authority in 2023",
-			"author": "Michal Jirků",
-			"date": "2023.9.16",
-			"summary": "A tale how running your own X509 root CA—for internal services—changed in the last 20 years.",
-		},
-		{
-			"canonical_url": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
-			"path": "https://hedgehoglibrarian.com/2023/08/14/executive-function-theft/",
-			"title": "Executive Function Theft",
-			"author": "Abigail Goben",
-			"date": "2023.8.14",
-			"summary": "This one registers loudly.",
-		},
 	]))
 	.expect("invalid external link set")
 });
