@@ -241,7 +241,7 @@ Really the only difference is that we manually convert from `Friend` to `Display
 
 Instead of a trait, just make a type that implements the generic behavior you want, and then write a function to convert your data-type into your trait-type. If you need some data-type specific logic, then pass around functions as necessary (usually from your conversion function).
 
-Traits make sense in Rust, because the alternative I've proposed wouldn't work well with Rust's memory model or focus on performance, and using functions in this first-class manor would be much more complicated. For a language like Gleam, that doesn't have those concerns, but that _is_ very concerned with being simple and keeping concept count low, they don't make as much sense. After all, all you really need is data and functions. :^)
+Traits make sense in Rust, because the alternative I've proposed wouldn't work well with Rust's memory model or focus on performance, and using functions in this first-class manner would be much more complicated. For a language like Gleam, that doesn't have those concerns, but that _is_ very concerned with being simple and keeping concept count low, they don't make as much sense. After all, all you really need is data and functions. :^)
 
 ---
 
